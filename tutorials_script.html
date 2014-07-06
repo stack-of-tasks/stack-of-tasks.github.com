@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Stack of Tasks" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Stack of Tasks</title>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+      <header class="inner">
+        <a id="forkme_banner" href="https://github.com/stack-of-tasks">View on GitHub</a>
+
+        <h1 id="project_title">Stack of Tasks</h1>
+        <a id="home" href="index.html">Home</a>&nbsp;&nbsp;
+        <a id="installation" href="installation.html">Installation</a>&nbsp;&nbsp;
+        <a id="tutorials" href="tutorials.html">Tutorial</a>&nbsp;&nbsp;
+        <a id="faq" href="faq.html">FAQ</a>&nbsp;&nbsp;
+        <a id="showcase" href="showcase.html">Showcase</a>&nbsp;&nbsp;
+      </header>
+    </div>
+  </head>
+
+  <body>
+
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+
+	In this section are detailed some examples to test the stack of tasks framework 
+on the humanoid robot <a href="">Romeo</a>.   
+
+
+To vizualize the robot, you can use <code>rviz</code>.
+
+
+        <h3>Running the python scripts</h3>
+
+To execute the scripts and display the results with rviz, you need 2 consoles
+In the first, start the viewer   
+<pre><code>$ roslaunch romeo_description sot_display.launch</code></pre>
+Note: if you do not want to use the viewer, you can only start <code>roscore</code>.
+
+In the second, start the python script.   
+<pre><code>$ python -i kine_romeo.py</code></pre>
+
+<h3>Detail of the python scripts</h3>
+
+Those scripts are located in <code>${your_installation_path}/lib/python2.X/site-packages/dynamic_graph/tutorial.</code>
+With the installation script, the installation path is <code>${HOME}/devel/INSTALLATION_FOLDER/install</code>,
+where <code>INSTALLATION_FOLDER</code> is the folder specified in the istallation
+
+python2.X is your version of python version: 2.6 or 2.7
+
+To run them, it is necessary to complete the environment variables LD_LIBRARY_PATH and PYTHONPATH.
+To this purpose, you can either
+<ol>
+<li> source the <code>config_XXX.bash</code> file created during the compilation using the install-sot.sh script.
+This file is located in the same folder as install_sot.sh.
+</li>
+<li>
+or you can do it manually:
+<pre><code>
+export your_installation_path=${HOME}/devel/INSTALLATION_FOLDER/install
+export ROS_PACKAGE_PATH=${your_installation_path}/../:$ROS_PACKAGE_PATH;
+export LD_LIBRARY_PATH=${your_installation_path}/lib/:$LD_LIBRARY_PATH;
+export LD_LIBRARY_PATH=${your_installation_path}/lib/plugin:$LD_LIBRARY_PATH;
+export PYTHONPATH=${your_installation_path}/lib/python2.X/site-packages/:$PYTHONPATH
+</code></pre>
+</li>
+<ol>
+        <h3>kine_romeo.py</h3>
+
+This script defines a first kinematic simulation with the Romeo robot.
+The romeo robot is controlled by 4 tasks: 
+<ul>
+<li>
+Two contact tasks on the feet, _contactRF_ and _contactLF_, corresponding to two 6d position tasks.
+</li>
+<li>
+A task controlling the center of mass   
+</li>
+This task is one of the several tasks predefined (but not added to the stack) in the dictionary of tasks provided by the entity _Robot_.  
+The dictionary can be consulted using the command: <code>robot.tasks</code>
+<li>A 3d position task for the right hand</li>
+</ul>
+
+This task is characterized by 4 entities: the task, the operational point (here the right hand augmented by a translation), the desired position for the hand (here only 3d are defined) and the gain of the task (an adaptive gain).   
+All those elements are gathered in a structure called _taskRH_,instance of _MetaTask6d_, that realizes all the links between the several entities.  
+
+<p>
+In the script, only the position of the hand is controlled. To change the degrees of freedom controlled, please change the value of the signal selec.
+This signal is a sequence of boolean in this order: psi, theta, phi, z, y, x (reverse polish notation). For example:
+</p>
+
+<pre>
+taskRH.feature.selec.value = '111111' # The task is controlled in position and orientation.
+taskRH.feature.selec.value = '000111' # The task is then controlled in position only
+</pre>
+
+The definition of this task does not use the predefined version of the task contained in the dictionary, only to present an example of task creation.
+
+Typing <code>go</code>starts a the simulation loop.
+The robot will then go to the desired positions defined by the tasks. 
+You can change interactively the content of the stack, the hand... using the python interface.
+
+To continue the example, you can for example try adding a task on the left hand, following the same scheme as for the right hand.
+
+
+        <h3>walk_romeo.py</h3>
+
+In this example, the Romeo robot goes for a (kinematic) walk.
+This script uses the jrl-walkgen package to compute the required postures for the feet, the center of mass and the waist orientation.
+
+The stack contains the following tasks (by order of decreasing priority)
+<ol>
+<li> ROMEO_task_com, that forces the Center of mass of the robot to be in the support polygon (only the x and y axes are constrained). You can access it using <code>robot.tasks['com']</code>.</li>
+<li> taskWaist, that constrains the rotation and translation of the waist in a plane. You can access it using <code>robot.tasks['waist']</code>.</li>
+<li> ROMEO_task_right-ankle, that defines the 6 dof position of the right Foot</li>
+<li> ROMEO_task_left-ankle, that defines the 6 dof position of the left Foot</li>
+</ol>
+
+    
+
+In addition to those tasks (that translate the output of the pattern generator into tasks), another task is defined: <code>robot.tasks['robot_task_position']</code>, to force the arms, head and chest to stay still during the walk
+<p>
+You can control the walk of the robot with the following command:
+<code>robot.pg.velocitydes.value = (x, y, theta)</code>
+<ol>
+<li> x is the forward/backward velocity</li>
+<li> y is the lateral velocity</li>
+<li> theta is the rotation velocity (requires that ||(x,y)|| > 0.01)</li>
+</ol>
+</p>
+
+        <h3>sot-concept.py: understanding the stack of task mechanism</h3>
+
+
+This script aims at understanding the mechanisms of a hierarchy of task.
+
+<p>In this script, the robot Romeo has to grasp a ball. 
+Several sets of stack are tested in order to exemplify the influence and necessity of elements/tasks 
+such as com control, joint limits, damping... during the realization of a simple motion.
+</p>
+
+<p>
+The purpose of this script is to see by the example the possible faulty behaviors that 
+can appear (divergence, loss of stability ...) when the stack is incomplete.
+</p>
+
+<ol>
+<li> Only the task RH</br>
+Since there is no constraint on the feet, the robot flies to the objective
+</li>
+
+<li> Task RH + foot constraint, balance is kept</br>
+The robot put its hand at the desired place while keeping its feet on the ground
+</li>
+
+<li> Task RH + foot constraint, balance is lost</br>   
+The robot put its hand at the desired place while keeping its feet on the ground, but the balance of the robot is lost due to the desired position of the hand
+</li>
+
+<li> Task RH + foot constraint + COM=</br>
+The robot put its hand at the desired place while keeping its feet on the ground and its balance, but enters in self collision during its motion
+</li>
+
+<li> Task RH + foot constraint + COM= + JL</br>
+The self collision is solved by adding a artificial joint limit.
+</li>
+
+<li> Task RH + foot constraint + COM<   </li>
+
+
+<li> Task RH + foot constraint + COM= + SINGULARITY</br>
+The robot put its hand at the desired place. 
+Due to the motion of the ball (type <code>i</code> to move it), the robot goes into a near singular configuration and the control law reaches high values, causing a strange behavior of the robot.
+</li>
+
+<li>Task RH + foot constraint + COM= + SINGULARITE + DAMPING</br>
+In this case, some damping is added to prevent high control values.
+</li>
+</ol>
+Note: you can change the configuration by re-typing <code>menu()</code>
+
+<h3>Diving into the python commands</h3>
+
+A cheatsheet of the python commands available for entity and signal manipulation is 
+<a href="http://db.tt/dODiGhlN">there</a>.
+
+    <div style="clear: both">&nbsp;</div>
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+
+
+  </body>
+</html>
