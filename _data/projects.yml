@@ -1,17 +1,160 @@
-- name: pg-ellipses
-  title: Non-Inclusive Contacts
-  description: "Integration of Non-Inclusive Contacts in Posture Generation."
-  image: ellipses.png
+- name: demo_robotatcwe
+  image: demo_robotatcwe.pdf.png
+  title: Robot@CWE
+  labo: JRL-Japan
+  description: This is the Final demonstrator of the FP7 IP Robot@CWE project.
+  ref: stasse-robot-13
 
-- name: roboptim-capsule
-  title: RobOptim Capsule
-  description: "An automated optimal capsule generator over polyhedrons."
-  url: https://github.com/roboptim/roboptim-capsule
-  image: capsule.png
+- name: demo_ballerose
+  image: demo_ballerose.pdf.png
+  title: Grasping while walking
+  labo: JRL-Japan
+  description: Grasping a ball with visual guidance while walking. First demonstration with the presented framework during the end of Nicolas Mansard's PhD
+  ref: mansard-icra-07
 
-- name: humanoids2012
-  title: Multi-contact planning
-  description: "Exploring humanoid robot locomotion capabilities in virtual disaster response scenarios."
-  url: http://hal-lirmm.ccsd.cnrs.fr/lirmm-00765817
-  video:
-    youtube_id: lJoUsCVJGxE
+- name: demo_frigo
+  image: demo_frigo.pdf.png
+  title: Open the fridge
+  labo: JRL-Japan
+  description: The robot opens a fridge to grasp a can. The motion results from an optimized task sequence. The motion was implemented by F. Keith during his PhD thesis.
+  ref: keith-iros-09
+
+- name: demo_switch
+  image: demo_switch.pdf.png
+  title: Haptic communication
+  labo: JRL-Japan
+  description: Study about the haptic (non verbal) communication between two human partners during a task implying physical collaboration. The resulting strategies are applied to drive the humanoid robot decisions. The motion was programmed by A. Bussy during his PhD thesis.
+  ref: bussy-iros-12
+
+- name: demo_bci
+  image: demo_bci.pdf.png
+  title: Brain computer interface
+  labo: JRL-Japan
+  ref: gergondet-roma-12
+
+- name: demo_torea_robot
+  image: demo_torea_robot.pdf.png
+  title: Active vision
+  labo: JRL-Japan
+  ref: Foissotte:2010
+
+- name: demo_joystick
+  image: demo_joystick.pdf.png
+  title: Joystick-controlled walk
+  labo: JRL-Japan and INRIA
+  ref: perrin-icra-10
+
+- name: demo_dune
+  image: demo_dune.pdf.png
+  title: Visual servoing of the walk
+  labo: JRL-Japan
+  ref: dune10
+
+- name: demo_stpbv
+  image: demo_stpbv.pdf.png
+  title: Obstacle avoidance
+  labo: JRL-Japan
+  ref: stasse-icra-08
+
+- name: demo_skin
+  image: demo_skin.pdf.png
+  title: Skin for humanoid robots
+  labo: JRL-Japan with TUM
+  ref: mittendorfer-iros-13
+
+- name: demo_mexique
+  image: demo_mexique.pdf.png
+  title: Pursuit-evasion planning
+  labo: JRL-Japan with CIMAT
+  ref: hayet-ijhr-12
+
+- name: demo_clermont
+  image: demo_clermont.pdf.png
+  title: Bi-manual visual servoing
+  labo: LAAS with LASMEA
+  ref: moughlbay-jnrh-10
+
+- name: demo_fastplan
+  image: demo_fastplan.pdf.png
+  title: Fast footstep replanning
+  labo: LAAS and JRL-Japan
+  ref: baudouin-humanoids-11
+
+- name: demo_kidroom
+  image: demo_kidroom.pdf.png
+  title: Careful steps through a kidroom
+  labo: LAAS
+  ref: moulard-biorob-12
+
+- name: demo_novela
+  image: demo_novela.pdf.png
+  title: Yoga dance
+  labo: LAAS
+  ref: ramos-ram-sub13
+
+- name: demo_chair
+  image: demo_chair.pdf.png
+  title: Stting into an armchair
+  labo: LAAS
+  ref: saab-tro-12
+
+- name: demo_hak
+  image: demo_hak.pdf.png
+  title: Motion recognition
+  labo: LAAS and JRL-Japan
+  ref: hak-tsmc-12
+
+- name: demo_duong
+  image: demo_duong.pdf.png
+  title: Visual footstep planning and control
+  labo: LAAS
+  ref: duong-humanoid-12
+
+- name: demo_smallstep_cdf
+  image: demo_smallstep_cdf.pdf.png
+  title: Small-step controllability
+  labo: LAAS
+  ref: dalibard-humanoid-11
+
+- name: demo_slam
+  image: demo_slam.pdf.png
+  title: SLAM based robot control
+  labo: LAAS
+  ref: moulard-icra-12sub
+
+- name: demo_dyninv
+  image: demo_dyninv.pdf.png
+  title: Climbing a ladder
+  labo: LAAS
+  ref: ramos-humanoid-11
+
+
+- name: demo_stab
+  image: demo_stab.pdf.png
+  title: Balance stabilization
+
+- name: demo_theremin
+  image: demo_theremin.pdf.png
+  title: Audio-based control
+  labo: LAAS with SIPG Okuno Lab
+  ref: mizumoto-iros-09
+
+- name: demoros
+  image: demoros.pdf.png
+  title: ROS bridge
+  labo: LAAS
+  ref: moulard-ros-12
+
+- name: demo_romeo
+  image: demo_romeo.pdf.png
+  title: Navigation planning and execution
+  labo: INRIA
+  description: The rob ot Romeo navigates into a virtual home environment and finally performs a manipulation task. Final demonstrator of WP7 of the FUI Romeo project
+  ref: keith-wpromeo-11
+
+
+
+
+
+
+
