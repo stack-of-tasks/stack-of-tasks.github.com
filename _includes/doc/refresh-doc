@@ -1,0 +1,4 @@
+#!/bin/sh
+echo "Downloading getting-started.html"
+rm roboptim-core/getting-started.html
+wget https://raw.githubusercontent.com/roboptim/roboptim-core/master/doc/getting-started.html -O roboptim-core/getting-started.html

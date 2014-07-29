@@ -25,42 +25,33 @@
   </head>
 
   <body>
-
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>Installation instructions</h3>
-        <h4>Prerequisites</h4>
-<p>The current software architecture has been tested entirely only on 
-Ubuntu 10.04 LTS and 12.04 LTS.
+        <h2>Tutorials</h2>
 
-A large part of the basic algorithms have been tested on Windows and Mac, but there is no guarantee that it is still true.
-</p>
+	We assume that the stack of tasks has been installed using the installation instruction provided 
+	<a href="https://github.com/Stack-Of-Tasks/sot-doc/wiki/Installation">there</a>.
 
-<p>There is currently no up-to-date binary distribution.</p>
+        <h3>Dynamic-graph tutorial</h3>
 
-<p>
-The installation is done through pulling and compiling a dozen of C++ 
-repositories.
+	In the proposed examples, the entity graph is created in a terminal python interpreter and the simulation loop is run within this terminal.   
+	More details on the internal graph structure used in the stack of tasks framework are provided in 
+	the <a href="https://github.com/jrl-umi3218/dynamic-graph-tutorial">dynamic-graph-tutorial</a>.
 
-The needed software are:
-git, CMake, boost 1.40.0 / 1.46.0, lapack, blas, python 2.6 / 2.7
-ROS (fuerte, groovy or hydro).
-Please note that most of the packages are ROS-independent, but some packages 
-allow to link the SOT framework to ROS (e.g. redundant_manipulator_control)
-</p>
+        <h3>Getting started</h3>
+        <ul>
+          <li><a href="tutorials_script.html">Basic examples</a> with the romeo robot.</br>
+          <li><a href="tutorials_ros.html">Link with ROS</a></br>This tutorial provides some examples on the binding of the stack of tasks environment with ROS.
+        </ul>
+        <h3><a href="testing_your_own_robot.html">Bridge with your own humanoid robot</a></h3>
+        
+        
 
-        <h4>Source installation</h4>
+	<div style="clear: both">&nbsp;</div>
 
-The sources can be installed using the script available at the following 
-repository: <a href="https://github.com/stack-of-tasks/install-sot">install-sot</code>
-
-        <h4>Binary installation</h4>
-
-
-Not available in its current state.
-
-
+      </section>
+    </div>
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">

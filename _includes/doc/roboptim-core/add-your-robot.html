@@ -1,0 +1,195 @@
+
+<h2>Import your own humanoid robot into the stack of tasks</h2>
+
+This tutorial assumes that you have completed the basic tutorials with Romeo.
+
+<p>
+  The Stack of Tasks is able to load a robot model from the urdf format.
+  It is recommanded that the urdf file follows the <a href="www.ros.org/reps/rep-0120.html">REP 120</a> directives.
+  The parsing process will look for the following names in the urdf file:
+  l_wrist, r_wrist
+  l_gripper, r_gripper
+  l_ankle, r_ankle
+  l_sole, r_sole
+  BODY, gaze, torso
+</p>
+
+Also, it is mandatory for the base_link to be a virtual joint.
+
+<pre><code>  &lt;link name="base_link"&gt;
+    &lt;joint name="waist" type="fixed"&gt;
+    &lt;parent link="base_link"/&gt;
+    &lt;child link="body"/&gt;
+    &lt;origin xyz="0 0 0" rpy="0 0 0"/&gt;
+    &lt;/joint&gt;
+    &lt;link name="body"&gt;
+</code></pre>
+
+To simplify this work, you can start from the <a href="https://github.com/stack-of-tasks/sot-romeo">sot-romeo</a> package.
+This package contains two elements:
+<ul>
+  <li> The python files allowing to load the dynamic model</li> 
+  <li> The C++ files allowing to embed the controller</li> 
+</ul>
+
+From now on, we suppose that you have copied the sot-romeo repository into
+sot-astro (replace astro by the name of your robot).
+
+<h3>Create the associated sot package</h3>
+
+2 python files can be found in the repository sot-astro/src/dynamic_graph/sot/astro
+<ul>
+  <li> __init__.py (that can remain empty)</li> 
+  <li> robot.py (that specifies some additional values for the urdf file)</li> 
+</ul>
+
+<p>Now we are going to adapt the robot.py file to your robot.
+  To this purpose, you need to replace the following pieces of informations:
+</p>
+
+<ol>
+  <li> The name of the package containing your robot</br>
+    <p>
+      <pre><code>self.urdfDir  = 'package://astro_description/urdf/'
+	  self.urdfName = 'astro.urdf'
+      </code></pre>
+    </p>
+  </li>
+
+  <li> The half-sitting pose</br>
+    <p> The half-sitting pose should contains 6+numdofs values.
+      The 6 first values correspond to the position of the waist in the environment at half sitting, 
+      then the value are specified by order of depth first in alphabetical order.
+    </p>
+  </li>
+
+  <li> The sole dimensions</br>
+    <p>The sole dimension is not defined in the urdf file.
+      To test the pattern generator, it is mandatory to add those values:
+      <pre><code>self.ankleLength = 0.1935
+	  self.ankleWidth  = 0.121
+      </code></pre>
+    </p>
+  </li>
+
+  <li> (optional) rename the key links.</br>
+    <p>
+      This step is not required if your urdf file fits the rep 120.
+      If some of the key frames are not defined, you can complete the jointMap dictionnary
+      in order to correct thos missing links
+      <pre><code>jointMap['torso']   = 'NAME_OF_LINK'</code></pre>
+    </p>
+  </li>
+</ol>
+
+<p>
+  Once this is done, you can compile and install this package</br>
+  Simplify the src/CMakeLists.txt in order to execute only those commands:</p>
+<pre><code>
+    INCLUDE(../cmake/python.cmake)
+    FINDPYTHON()
+    INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
+
+    # Install Python files.
+    SET(PYTHON_MODULE_DIR
+    ${CMAKE_CURRENT_SOURCE_DIR}/dynamic_graph/sot/astro)
+    SET(PYTHON_MODULE_BUILD_DIR
+    ${CMAKE_CURRENT_BINARY_DIR}/dynamic_graph/sot/astro)
+
+    SET(PYTHON_MODULE dynamic_graph/sot/astro)
+    PYTHON_INSTALL_ON_SITE("${PYTHON_MODULE}" "__init__.py" )
+    PYTHON_INSTALL_ON_SITE("${PYTHON_MODULE}" "robot.py" "${PYTHON_SITELIB}")
+</code></pre>
+
+<p>Add sot-astro to the name of list of the package compiled in install-sot, 
+  and install it.</p>
+
+<h3>Testing with the sot</h3>
+<h4>Validation of the urdf reading</h4>
+<p>Now you can try loading your urdf file with the sot.</p>
+
+Start <code>roscore</code></br>
+Then open a python terminal, and type these commands:</br>
+<pre><code>from dynamic_graph.sot.core.robot_simu import RobotSimu
+    from dynamic_graph.sot.astro.robot import *
+    robot = Robot('astro', device=RobotSimu('astro'))
+</code></pre>
+
+<p>
+  If this works, congratulations, the sot was able to load you robot correctly.
+  Otherwise, you will have to correct the error given. Make sure that the special
+  frames are specified.
+</p>
+
+<p>
+  Now that the robot can be parsed, two tests can be run: 
+  the kinematics test and the walk test.
+</p>
+
+<h4>Creating a launch file to bridge the sot with rviz</h4>
+First, create the following launch file (e.g. in your robot ros folder):
+<pre><code>
+    &lt;launch&gt;
+    &lt;arg name="model" value="$(find astro_description)/urdf/astro.urdf"/&gt;
+    &lt;arg name="gui" default="True" /&gt;
+    &lt;param name="robot_description" textfile="$(arg model)" /&gt;
+    &lt;param name="use_gui" value="$(arg gui)"/&gt;
+
+    &lt;node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" &gt;
+    &lt;env name="ROS_NAMESPACE" value="/dynamic_graph"/&gt;
+    &lt;/node&gt;
+    &lt;node name="robot_pose_publisher" pkg="dynamic_graph_bridge" type="robot_pose_publisher" &gt;
+    &lt;env name="ROS_NAMESPACE" value="/dynamic_graph"/&gt;
+    &lt;/node&gt;
+    &lt;node name="rviz" pkg="rviz" type="rviz"/&gt;
+    &lt;/launch&gt;
+</code></pre>
+
+<h4>Kinematic test</h4>
+The first test consists in...
+
+
+
+<h4>Walk test</h4>
+The second test simply consists in validating the walk algorithms on your robot.
+<pre><code># from dynamic_graph.sot.astro.sot_astro_controller import *
+    # Create the robot.
+    from dynamic_graph import plug
+    from dynamic_graph.sot.dynamics import *
+    from dynamic_graph.sot.core import *
+    from dynamic_graph.sot.astro.robot import *
+    robot = Robot('astro', device=RobotSimu('astro'))
+
+    # Binds with ros, export joint_state.
+    from dynamic_graph.ros import *
+    ros = Ros(robot)
+
+    # Create a solver.
+    from dynamic_graph.sot.application.velocity.precomputed_tasks import initialize
+    solver = initialize ( robot )
+
+    # Basic walk
+    from dynamic_graph.sot.pattern_generator.walking import CreateEverythingForPG, walkFewSteps
+    CreateEverythingForPG ( robot , solver )
+    walkFewSteps ( robot )
+
+    #----- MAIN LOOP ---------------------------------------------------------------
+    from dynamic_graph.sot.core.utils.thread_interruptible_loop import loopInThread,loopShortcuts
+    dt=5e-3
+    @loopInThread
+    def inc():
+    robot.device.increment(dt)
+
+    runner=inc()
+    [go,stop,next,n]=loopShortcuts(runner)
+
+    go()
+
+</code></pre>
+
+
+<h3>Embed the sot controller</h3>
+TODO...
+
+
+

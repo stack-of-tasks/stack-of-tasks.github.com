@@ -1,59 +1,197 @@
-<!DOCTYPE html>
-<html>
+---
+layout: default
+title: Showcase
+group: "navigation"
+disqus: true
+---
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Stack of Tasks" />
+<h1 id="showcase" class="page-header">{{ page.title }}</h1>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+<h2>Projects</h2>
 
-    <title>Stack of Tasks</title>
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-      <header class="inner">
-        <a id="forkme_banner" href="https://github.com/stack-of-tasks">View on GitHub</a>
+<div style="padding: 2em"></div>
 
-        <h1 id="project_title">Stack of Tasks</h1>
-        <a id="home" href="index.html">Home</a>&nbsp;&nbsp;
-        <a id="installation" href="installation.html">Installation</a>&nbsp;&nbsp;
-        <a id="tutorials" href="tutorials.html">Tutorial</a>&nbsp;&nbsp;
-        <a id="faq" href="faq.html">FAQ</a>&nbsp;&nbsp;
-        <a id="showcase" href="showcase.html">Showcase</a>&nbsp;&nbsp;
-      </header>
-    </div>
-  </head>
+<!-- place somewhere in the <body> of your page -->
+<table>
+  <tr>
+    <td>
+      <a href="" target="_blank">
+	<img src="assets/showcase/ellipses.png"
+	     alt="Non-Inclusive Contacts"
+	     title="Non-Inclusive Contacts"/>
+      </a>
+    </td>
+    <td>
+      <a href="" target="_blank">
+	<img src="assets/showcase/ellipses.png"
+	     alt="Non-Inclusive Contacts"
+	     title="Non-Inclusive Contacts"/>
+      </a>
+    </td>
+    <td>
+      <a href="" target="_blank">
+	<img src="assets/showcase/ellipses.png"
+	     alt="Non-Inclusive Contacts"
+	     title="Non-Inclusive Contacts"/>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="" target="_blank">
+	<img src="assets/showcase/ellipses.png"
+	     alt="Non-Inclusive Contacts"
+	     title="Non-Inclusive Contacts"/>
+      </a>
+    </td>
+    <td>
+      <a href="" target="_blank">
+	<img src="assets/showcase/ellipses.png"
+	     alt="Non-Inclusive Contacts"
+	     title="Non-Inclusive Contacts"/>
+      </a>
+    </td>
+    <td>  <a href="" target="_blank">
+	<img src="assets/showcase/ellipses.png"
+	     alt="Non-Inclusive Contacts"
+	     title="Non-Inclusive Contacts"/>
+      </a>
+    </td>
+  </tr>
+</table>
 
-  <body>
+<!--
+    <section class="slider">
+      <div class="flexslider">
+	<ul class="slides">
+	  {% for project in site.data.projects %}
+	  {% if project.image %}
+          {% if project.thumbnail %}
+          <li data-thumb="assets/showcase/{{ project.thumbnail }}">
+            {% else %}
+          <li data-thumb="assets/showcase/{{ project.image }}">
+            {% endif %}
+            <a href="{{ project.url }}" target="_blank">
+              <img src="assets/showcase/{{ project.image }}"
+		   alt="{{ project.title }}"
+		   title="{{ project.title }}"/>
+            </a>
+            {% if project.description %}
+            <p class="flex-caption">{{ project.description }}</p>
+            {% endif %}
+          </li>
+	  {% else if project.video %}
+          <li class="slide play3">
+            <iframe width="560" height="200" id="youtubevideo"
+		    title="{{ project.title }}"
+		    src="http://www.youtube.com/embed/{{ project.video.youtube_id}}?enablejsapi=1&version=3&playerapiid=youtubevideo&vq=hd720"
+		    allowfullscreen frameborder="0"></iframe>
+          </li>
+	  {% endif %}
+	  {% endfor %}
+	</ul>
+      </div>
+    </section>
+    -->
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>Citation...</h3>
+<!-- Load FlexSlider Library -->
+<script src="js/flexslider/jquery.flexslider-min.js"></script>
 
+<!-- Load FlexSlider style -->
+<link href="js/flexslider/flexslider.css" rel="stylesheet">
 
-        <h3>Showcase</h3>
-The stack of tasks has been tested for now on the following robots:
-<ul>
-<li>HRP-2
-<li>HRP-4
-<li>Romeo
-<li>PR2.
-</ul>
+<!-- Load custom slider style -->
+<link rel="stylesheet" href="slider.css" type="text/css">
+<script src="http://a.vimeocdn.com/js/froogaloop2.min.js"></script>
 
+<!-- Load YouTube player -->
+<script src="js/flexslider-youtube.js"></script>
+<script src="js/jquery.fitvids.js"></script>
 
-Here is a list of the works realized using the Stack of Tasks.
+<script type="text/javascript">
+  // Initialize FlexSlider
+  $(window).load(function() {
+  $('.flexslider')
+  .fitVids()
+  .flexslider({
+  animation: "slide",
+  //controlNav: "thumbnails",
+  directionNav: true,
+  // TODO: need to stop slideshow while playing videos to handle this
+  slideshow:false,
+  slideshowSpeed: 7500,
+  animationLoop: true,
+  animationSpeed: 600,
+  pauseOnAction: true,
+  pauseOnHover: true,
+  touch: true,
+  smoothHeight: true,
+  video: true,
+  before: function(slider){
+  if (slider.slides.eq(slider.currentSlide).find('iframe').length !== 0)
+  $f( slider.slides.eq(slider.currentSlide).find('iframe').attr('id') ).api('pause');
+  }
+  });
+  });
+</script>
 
+<div style="padding: 2em"></div>
 
+<h2>Papers</h2>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
+<div class="table-responsive">
+  <table class="table table-condensed" id="status">
+    <thead>
+      <tr>
+        <td>Title</td>
+        <td>Authors</td>
+        <td>Conference/Book</td>
+        <td>Year</td>
+        <td>File</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for paper in site.data.papers %}
+      <tr id="{{ paper.id }}">
+        <td id="{{ paper.id }}-title">{{ paper.title }}</td>
+        <td id="{{ paper.id }}-authors">
+          {% for author in paper.author %}
+          <!-- Given names like Jean-Paul become J.-P. -->
+          <!-- TODO: remove extra whitespace, i.e. J. -P. -->
+          {% assign given_names = author.given | split:'-' %}
+          {% for n in given_names  %}
+          {% if forloop.index > 1 %}
+          -{{ n | truncate: 2, '.' }}
+          {% else %}
+          {{ n | truncate: 2, '.' }}
+          {% endif %}
+          {% endfor %}
+          {% if forloop.index < forloop.length %}
+				{{author.family}},
+				{% else %}
+				{{author.family}}
+				{% endif %}
+				{% endfor %}
+				</td>
+        {% if paper.container-title %}
+        <td id="{{ paper.id }}-book-title">{{paper.container-title}}</td>
+        {% else if paper.type == 'thesis' %}
+        <td id="{{ paper.id }}-thesis">Thesis</td>
+        {% endif %}
+        <td id="{{ paper.id }}-year">{{paper.year}}</td>
+        <td id="{{ paper.id }}-url">
+          {% if paper.URL %}
+          <a href="{{ paper.URL }}" target="_blank">
+            <span class='glyphicon glyphicon-file'></span>
+          </a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
+<div style="padding: 10em"></div>
 
-
-  </body>
-</html>
+<!-- vim: set ts=2 sw=2 ft=liquid si: -->
