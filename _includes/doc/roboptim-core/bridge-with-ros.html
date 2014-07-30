@@ -7,34 +7,37 @@ More details are provided <a href="http://wiki.ros.org/dynamic_graph_bridge">on 
 
 <h3>Executing python commands</h3>
 
-The run_command service only considers the first line of your command, and does not accept end of line characters.
+<p>
+The simplest solution consists in opening a remote interpreter in your terminal.
+This provides the same output as the classical interpreter, but you will not have the autocompletion.
+<code>rosservice call run_command</code>
+</p>
+
+<p>
+If you run this command with an argument, you will only execute the command you provided, without opening the interpreter.
+<code>rosservice call run_command  "print 'hello world'"</code>
+</p>
+
+<p> You can also execute a file, using this command
+<code>rosrun dynamic_graph_bridge run_command '/absolute/path/to/file.py'</code>
+</p>
+
+<p>Note: The <code>run_command</code> service only considers the first line of your command, and does not accept end of line characters.
 In other words, if you run this:
-rosservice call run_command "print 'a'\n print 'b'"
-You'll have this result:
-result: <NULL>
-  stdout: ''
-  stderr: SyntaxError: ('unexpected character after line continuation character', ('<string>', 1, 21, "print 'a'\\n print 'b'"))
+<code>rosservice call run_command "print 'a'\n print 'b'"</code><br/>
+You'll have this result:<br/>
+<pre><code>result: <NULL>
+stdout: ''
+stderr: SyntaxError: ('unexpected character after line continuation character', ('<string>', 1, 21, "print 'a'\\n print 'b'"))
+</code></pre>
 
     But if you use this:
-    rosservice call run_command "print 'a'; print 'b'"
-    You'll have the expected result:
-    result: None
-    stdout: a
-    b
+<code>rosservice call run_command "print 'a'; print 'b'"</code><br/>
 
-    So you have 3 solutions:
-    1. Use the python interpreter. If the use of the rosservice is not mandatory, this is the simplest solution.
-    Calling run_command without args will start a python interface in which you can type python commands easily
-    rosrun dynamic_graph_bridge run_command
-    > ...
-
-    2. make your instructions hold in one line (if applicable).
-    rosservice call run_command  "'[(x+1) for x in [1,2,3]]'"
-
-    3. write your instruction in a file and execute it.
-    rosrun dynamic_graph_bridge run_command 'file.py'
-
-
-    Note: in the future, please ask such questions in github. Especially in cases like this one where this can be attached to a specific repository.
-    This will help future users that encounter the same issue.
+You'll have the expected result:
+<pre><code>result: None
+stdout: a
+b
+</code></pre>
+</p>
 
