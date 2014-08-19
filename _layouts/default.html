@@ -122,16 +122,20 @@
 		<li class="dropdown-header">Stack of Tasks Features</li>
 		{% include nav_element.html title="Showcase" url="/showcase.html" %}
 		{% include nav_element.html title="FAQ" url="/faq.html" %}
-    {% include nav_element.html title="Cheat sheet" url="http://db.tt/dODiGhlN" %}
+		{% include nav_element.html title="Cheat sheet" url="http://db.tt/dODiGhlN" %}
 		<li class="divider"></li>
-		<li class="dropdown-header">Tutorials</li>
+		{% include nav_element.html title="API Documentation" url="/documentation.html" %}
+	      </ul>
+	    </li>
+	    <li class="dropdown">
+	      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-play"></span>
+		Tutorials <b class="caret"></b></a>
+	      <ul class="dropdown-menu">
 		{% include nav_element.html title="Dynamic graph 101" url="/tuto_dynamic_graph.html" %}
 		{% include nav_element.html title="Getting Started" url="/tuto_getting_started.html" %}
 		{% include nav_element.html title="Bridge with ROS" url="/tuto_bridge_with_ros.html" %}
 		{% include nav_element.html title="Wrap the controller"  url="/tuto_wrap_controller.html" %}
 		{% include nav_element.html title="Add your robot"  url="/tuto_add_your_robot.html" %}
-		<li class="divider"></li>
-		{% include nav_element.html title="API Documentation" url="/documentation.html" %}
 	      </ul>
 	    </li>
 
@@ -144,13 +148,11 @@
 		<li><a href="http://www.github.com/stack-of-tasks/">View on GitHub</a></li>
 	      </ul>
 	    </li>
-
             <li>
               <a href="mailto:hpp AT laas DOT fr?Subject=[SoT]" target="_top">
-		<span class="glyphicon glyphicon-message-out"></span> 
+		<span class="glyphicon glyphicon-message_out"></span> 
 		Support</a>
             </li>
-
           </ul>
         </div><!--/.nav-collapse -->
       </div><!--/.container-fluid -->
