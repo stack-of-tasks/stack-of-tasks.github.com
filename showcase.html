@@ -8,11 +8,7 @@ disqus: true
 <h1 id="showcase" class="page-header">{{ page.title }}</h1>
 
 <h2>Projects</h2>
-<a name="retour au texte" href= "#note1"> 1</a>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit (<a name="retour au texte" href= "#note1"> 1</a>). Aenean odio ipsum, adipiscing vehicula cursus ac, rutrum in felis. </p>
------
-<p>Note :
-<a name= "note1">(1)</a> Nam quis ipsum nibh, ac lacinia augue (<a href= "#retour au texte">retour au texte1</a>)</p>
+<a name="top"></a>
 
 <div style="padding: 2em"></div>
 
@@ -104,25 +100,42 @@ disqus: true
 
 <div class="table-responsive">
   <table class="table table-condensed" id="status">
-    <thead>
-      <tr>
-        <td>Title</td>
-        <td>Authors</td>
-        <td>Conference/Book</td>
-        <td>Year</td>
-        <td>File</td>
-        <td></td>
-      </tr>
-    </thead>
     <tbody>
 	  {% for project in site.data.projects %}
+    {% capture column %}{% cycle 1, 2, 3, 4, 5, 6, 7, 8, 9, 10%}{% endcapture %}
+    {% if column == '1' %}
+    </tr>
+      <tr>
+        <td><center>Title</center>/td>
+        <td><center>Description</center></td>
+        <td><center>Lab</center></td>
+        <td>Bib</td>
+        <td>Video</td>
+        <td><a href= "#top">top</a>
+<!--
+<span class="glyphicon glyphicon-icon up_arrow"></span>
+<span class="glyphicon glyphicon-icon up-arrow"></span>
+<span class="glyphicon glyphicon-icon-up_arrow"></span>
+<span class="glyphicon glyphicon-icon-up-arrow"></span>
+<span class="glyphicon glyphicon-up_arrow"></span>
+<span class="glyphicon glyphicon-up-arrow"></span>
+<span class="glyphicon icon-up-arrow"></span>
+<span class="glyphicon icon-up_arrow"></span>
+<span class="glyphicon up-arrow"></span>
+<span class="glyphicon up_arrow"></span>
+-->
+</td>
+        <td></td>
+      </tr>
+    <tr>
+	  {% endif %}
+
       <tr id="{{ paper.id }}">
         <td id="{{ paper.id }}-title">
-        <a name= "{{ project.name }}">X</a>
+        <a name= "{{ project.name }}"></a>
         {{ project.title }}</td>
-        <td id="{{ paper.id }}-authors">{{ project.authors }}</td>
         <td id="{{ paper.id }}-description">{{ project.description }}</td>
-        <td id="{{ paper.id }}-year">{{project.year}}</td>
+        <td id="{{ paper.id }}-year">{{project.lab}}</td>
         <td id="{{ paper.id }}-url">
           {% if paper.URL %}
           <a href="{{ paper.URL }}" target="_blank">
@@ -130,7 +143,7 @@ disqus: true
           </a>
           {% endif %}
         </td>
-        <td><a href= "#retour au texte">retour au texte1</a></td>
+        <td></td>
       </tr>
       {% endfor %}
     </tbody>

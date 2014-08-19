@@ -1,0 +1,14 @@
+Porting the code to the physical platform is likely to require you to wrap the controller in external piece of software. For example,for the HRP robot, it is required to call the controller in a openrtm component. See slides ... for more details on this.
+
+
+The device is not the default one!
+
+
+Embedding the controller present the following differences:
+<ol>
+<li>The incrementation of the command law is realized automaticatilly by the controller.
+Hence you must not define the incrementation thread in the python script.</li>
+<li> In order to retrieve a python interpreter, you can run the following command: <code>rosservice call run_command</code></li>
+<li>Before starting the controller, it is mandatory for the solver to be defined and plugged to the device</li>
+</ol>
+

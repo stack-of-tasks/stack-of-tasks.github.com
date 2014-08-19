@@ -1,5 +1,4 @@
-
-<h2>Import your own humanoid robot into the stack of tasks</h2>
+<h2></h2>
 
 This tutorial assumes that you have completed the basic tutorials with Romeo.
 
@@ -16,13 +15,13 @@ This tutorial assumes that you have completed the basic tutorials with Romeo.
 
 Also, it is mandatory for the base_link to be a virtual joint.
 
-<pre><code>  &lt;link name="base_link"&gt;
-    &lt;joint name="waist" type="fixed"&gt;
-    &lt;parent link="base_link"/&gt;
-    &lt;child link="body"/&gt;
-    &lt;origin xyz="0 0 0" rpy="0 0 0"/&gt;
-    &lt;/joint&gt;
-    &lt;link name="body"&gt;
+<pre><code>&lt;link name="base_link"&gt;
+&lt;joint name="waist" type="fixed"&gt;
+  &lt;parent link="base_link"/&gt;
+  &lt;child link="body"/&gt;
+  &lt;origin xyz="0 0 0" rpy="0 0 0"/&gt;
+  &lt;/joint&gt;
+&lt;link name="body"&gt;
 </code></pre>
 
 To simplify this work, you can start from the <a href="https://github.com/stack-of-tasks/sot-romeo">sot-romeo</a> package.

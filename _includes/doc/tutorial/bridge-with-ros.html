@@ -1,0 +1,68 @@
+<p>
+The core of the stack of tasks mechanism is independent from ROS: an execution is hence realized in a closed environment
+(the entities are only defined in the python environment and are only accessible via python commands).
+However, some bridges with ROS exist for the display, but also to send and receive some pieces of data.
+</p>
+
+
+<h2>ROS messages to signals</h2>
+Two entities allow you to exchange data from the ROS environment to the stack of tasks one, 
+and convert ros messages in sot signals, namely <code>rosPublish</code> and <code>rosSubscribe</code>.
+
+Here is a example of publication of matrix homogeneous from the sot environment to the sot environment:
+<pre><code class="python">
+ros.rosPublish.add('matrixHomoStamped', robot.frames['rightGripper'].name +'.position', 'right_gripper')
+ros.rosPublish.displaySignals()
+--- <rosPublish> signal list: 
+    |-- <Sig:N12dynamicgraph10RosPublishE(rosPublish)::input(MatrixHomo)::romeo_rightHand.position (Type Cst) AUTOPLUGGED
+    `-- <Sig:N12dynamicgraph10RosPublishE(rosPublish)::input(int)::trigger (Type Fun)
+</code></pre>
+
+<pre><code class="bash">
+rostopic list 
+/right_gripper  
+</code></pre>
+
+<p>
+This creates an input signal for the ros.rosPublish entity, as well as the rostopic element ""
+In order to publish something, it is hence necessary to plug the something 
+</p>
+
+More details are provided <a href="http://wiki.ros.org/dynamic_graph_bridge">on the ros wiki</a>
+
+<h2>Executing python commands</h2>
+
+<p>
+  The simplest solution consists in opening a remote interpreter in your terminal.
+  This provides the same output as the classical interpreter, but you will not have the autocompletion.
+  <code>rosservice call run_command</code>
+</p>
+
+<p>
+  If you run this command with an argument, you will only execute the command you provided, without opening the interpreter.
+  <code>rosservice call run_command  "print 'hello world'"</code>
+</p>
+
+<p> You can also execute a file, using this command
+  <code>rosrun dynamic_graph_bridge run_command '/absolute/path/to/file.py'</code>
+</p>
+
+<p>Note: The <code>run_command</code> service only considers the first line of your command, and does not accept end of line characters.
+  In other words, if you run this:
+  <code>rosservice call run_command "print 'a'\n print 'b'"</code><br/>
+  You'll have this result:<br/>
+  <pre><code>result: <NULL>
+	stdout: ''
+	stderr: SyntaxError: ('unexpected character after line continuation character', ('<string>', 1, 21, "print 'a'\\n print 'b'"))
+  </code></pre>
+
+  But if you use this:
+  <code>rosservice call run_command "print 'a'; print 'b'"</code><br/>
+
+  You'll have the expected result:
+  <pre><code>result: None
+      stdout: a
+      b
+  </code></pre>
+</p>
+
