@@ -1,14 +1,61 @@
-Porting the code to the physical platform is likely to require you to wrap the controller in external piece of software. For example,for the HRP robot, it is required to call the controller in a openrtm component. See slides ... for more details on this.
 
+<p>Porting the code to the physical platform is likely to require you to wrap the controller in an external piece of software. For example,for the HRP robots, it is required to call the controller in a openrtm component. See slides 42 for more details on this.</p>
 
-The device is not the default one!
+<p>
+The purpose of using the embedding the controller is to retrieve the data
+provided by the real robot. This may require the definition of an appropriated 
+device entity
+</p>
 
-
+<p>
 Embedding the controller present the following differences:
 <ol>
 <li>The incrementation of the command law is realized automaticatilly by the controller.
 Hence you must not define the incrementation thread in the python script.</li>
 <li> In order to retrieve a python interpreter, you can run the following command: <code>rosservice call run_command</code></li>
-<li>Before starting the controller, it is mandatory for the solver to be defined and plugged to the device</li>
+<li>Before starting the controller, it is *mandatory* for the solver to be defined and plugged to the device</li>
+<li>Using an embedded controller allows to realize simulation with ros and call
+python instruction from ros.
+</li>
 </ol>
+</p>
+
+
+<hR>Dummy ROS wrapping</h3>
+sot_sandbox
+
+<h2>Executing python commands via ROS</h2>
+
+<p>
+Since the controller is embedded, you have to open a remote interpreter in your terminal in order to execute python commands.
+  The remote interpreter provides the same output as the classical interpreter, but does not allow the autocompletion.
+  <code>rosservice call run_command</code>
+</p>
+
+<p>
+  If you run this command with an argument, you will only execute the command you provided, without opening the interpreter.
+  <code>rosservice call run_command  "print 'hello world'"</code>
+</p>
+
+<p> You can also execute a file, using this command
+  <code>rosrun dynamic_graph_bridge run_command '/absolute/path/to/file.py'</code>
+</p>
+
+<p>Note: The <code>run_command</code> service only considers the first line of your command, and does not accept end of line characters.
+  In other words, if you run this:
+  <code>rosservice call run_command "print 'a'\n print 'b'"</code><br/>
+  You'll have this result:<br/>
+  <pre><code>result: <NULL>
+stdout: ''
+stderr: SyntaxError: ('unexpected character after line continuation character', ('<string>', 1, 21, "print 'a'\\n print 'b'"))</code></pre>
+
+  But if you use this:
+  <code>rosservice call run_command "print 'a'; print 'b'"</code><br/>
+
+  You'll have the expected result:
+  <pre><code>result: None
+stdout: a
+b
+  </code></pre>
+</p>
 

@@ -1,4 +1,4 @@
-<h2>Kinematic robot simulations</h2>
+<h2>Robot kinematic simulations</h2>
 
 <p>
   We assume that (1) the stack of tasks has been installed using the installation instruction provided
@@ -110,11 +110,25 @@ from dynamic_graph.sot.core.robot_simu import RobotSimu
 robot = Robot('romeo', device=RobotSimu('romeo'))
 </code></pre>
 
-<pre><code class="python">
-# 1.b Create a solver.
+<p>
+This creates the dynamic model of the robot, as well as the device entity.
+The dynamic entity allows the computation of the jacobian, inertia, com of the robot.
+The device entity simulates the behavior of the robot.
+</p>
+
+
+<pre><code class="python"># 1.b Create a solver.
 from dynamic_graph.sot.application.velocity.precomputed_tasks import initialize
-solver = initialize ( robot)
+solver = initialize (robot)
 </code></pre>
+
+<p>
+This creates the default stack of tasks solver, that you can call using 
+<code class="python">solver</code>.
+You can add or remove tasks from it.
+To have a finer access to the tasks manipulation, you have to work directly
+with the entity <code class="python">solver.sot</code>.
+</p>
 
 <pre><code class="python">
 # 1.c Binds with ros, export joint_state.
@@ -123,7 +137,8 @@ ros = Ros(robot)
 </code></pre>
 
 <p>
-
+This creates a ROS binding allowing to display the model of the robot in rviz.
+It is not mandatory.
 </p>
 
 
