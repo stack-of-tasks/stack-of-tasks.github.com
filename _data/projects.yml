@@ -158,7 +158,7 @@
 - name: demo_stab
   image: demo_stab.pdf.png
   title: Balance stabilization
-  description:  Developments toward outdo or walking, by F. Lamiraux.
+  description:  Developments toward outdoor walking, by F. Lamiraux.
 
 
 - name: demo_theremin
