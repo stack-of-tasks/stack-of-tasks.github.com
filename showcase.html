@@ -10,7 +10,7 @@ disqus: true
 <h2>Gallery</h2>
 <a name="top"></a>
 
-<div style="padding: 2em"></div>
+<div style="padding: 1em"></div>
 
     <section class="slider">
       <div>
@@ -105,27 +105,15 @@ disqus: true
     {% capture column %}{% cycle 1, 2, 3, 4, 5, 6, 7, 8, 9, 10%}{% endcapture %}
     {% if column == '1' %}
     </tr>
-      <tr>
-        <td><center>Title</center>/td>
+      <tr bgcolor="#a7bbfb">
+        <td><center>Title</center></td>
         <td><center>Description</center></td>
         <td><center>Lab</center></td>
         <td>Bib</td>
         <td>Video</td>
-        <td><a href= "#top">top</a>
-<!--
-<span class="glyphicon glyphicon-icon up_arrow"></span>
-<span class="glyphicon glyphicon-icon up-arrow"></span>
-<span class="glyphicon glyphicon-icon-up_arrow"></span>
-<span class="glyphicon glyphicon-icon-up-arrow"></span>
-<span class="glyphicon glyphicon-up_arrow"></span>
-<span class="glyphicon glyphicon-up-arrow"></span>
-<span class="glyphicon icon-up-arrow"></span>
-<span class="glyphicon icon-up_arrow"></span>
-<span class="glyphicon up-arrow"></span>
-<span class="glyphicon up_arrow"></span>
--->
+        <td><a href= "#top">
+<span class="glyphicon glyphicon-arrow-up"></span></a>
 </td>
-        <td></td>
       </tr>
     <tr>
 	  {% endif %}
@@ -143,7 +131,12 @@ disqus: true
           </a>
           {% endif %}
         </td>
-        <td></td>
+        <td><center>
+	    {% if project.video %}
+          <a href="https://www.youtube.com/watch?v={{ project.video.youtube_id}}">		 
+          <span class='glyphicon glyphicon-film'></span></a>
+	    {% endif %}
+        </center></td>
       </tr>
       {% endfor %}
     </tbody>
