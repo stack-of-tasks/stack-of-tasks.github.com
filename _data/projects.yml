@@ -28,6 +28,8 @@
   lab: JRL-Japan
   description: Study about the haptic (non verbal) communication between two human partners during a task implying physical collaboration. The resulting strategies are applied to drive the humanoid robot decisions. The motion was programmed by A. Bussy during his PhD thesis.
   ref: bussy-iros-12
+  video:
+    youtube_id: kYUdYOIYeZ0
 
 - name: demo_bci
   image: demo_bci.pdf.png
@@ -35,6 +37,8 @@
   lab: JRL-Japan
   description: The robot is driven by symbolic orders that are selected by a brain-computer interface. The orders are converted into tasks that are applied by the robot. The demonstration was developped by P. Gergondet during his PhD thesis. It is one of the main demonstrators of the FP7 IP VERE project.
   ref: gergondet-roma-12
+  video:
+    youtube_id: dyw4fz4VIU4
 
 - name: demo_torea_robot
   image: demo_torea_robot.pdf.png
@@ -101,6 +105,8 @@
   lab: LAAS
   description: A footstep plan is computed into a very constrained environment. The flying-foot position is servoed. A programming language during the execution based on visual feedback. The demonstration was realized by T. Moulard during his PhD thesis.
   ref: moulard-biorob-12
+  video:
+    youtube_id: cUZ0nNiPs70
 
 - name: demo_novela
   image: demo_novela.pdf.png
@@ -153,6 +159,8 @@
   lab: LAAS
   description: Application of the multi-contact inverse-dynamics motion generation to the humanoid robot Romeo model.
   ref: ramos-humanoid-11
+  video:
+    youtube_id: WkBU20Ut1Yo
 
 
 - name: demo_stab
@@ -181,5 +189,6 @@
   lab: INRIA
   description: The robot Romeo navigates into a virtual home environment and finally performs a manipulation task. Final demonstrator of WP7 of the FUI Romeo project
   ref: keith-wpromeo-11
-    
+  video:
+    youtube_id: eiQctKGUPw4    
 
