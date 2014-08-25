@@ -33,7 +33,12 @@ disqus: true
 		   title="{{ project.title }}"/>
             </a>
             {% if project.title %}
-            <p class="flex-caption">{{ project.title }}</p>
+            <p class="flex-caption">{{ project.title }}
+	            {% if project.video %}
+                  <a href="https://www.youtube.com/watch?v={{ project.video.youtube_id}}">
+                  <span class='glyphicon glyphicon-film'></span></a>
+	            {% endif %}
+            </p>
             {% endif %}
           </li>
 	  {% else if project.video %}
