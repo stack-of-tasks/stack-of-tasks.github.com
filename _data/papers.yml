@@ -1,0 +1,118 @@
+- id: brossette:iros:2014
+  title: "Integration of Non-Inclusive Contacts in Posture Generation"
+  author:
+  - family: Brossette
+    given: Stanilas
+  - family: Escande
+    given: Adrien
+  - family: Vaillant
+    given: Joris
+  - family: Keith
+    given: François
+  - family: Moulard
+    given: Thomas
+  - family: Kheddar
+    given: Abderrahmane
+  year: 2014
+  container-title: IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS'2014)
+  type: book
+- id: moulard:robomec:2013
+  title: "RobOptim: an Optimization Framework for Robotics"
+  author:
+  - family: Moulard
+    given: Thomas
+  - family: Lamiraux
+    given: Florent
+  - family: Bouyarmane
+    given: Karim
+  - family: Yoshida
+    given: Eiichi
+  year: 2013
+  container-title: Robotics and Mechatronics Conference (Robomec'2013)
+  type: book
+  URL: http://hal.archives-ouvertes.fr/hal-00802083
+- id: brossette:cisram:2013
+  title: "Point-Cloud Multi-Contact Planning for Humanoids: Preliminary Results"
+  author:
+  - family: Brossette
+    given: Stanislas
+  - family: Vaillant
+    given: Joris
+  - family: Keith
+    given: François
+  - family: Escande
+    given: Adrien
+  - family: Kheddar
+    given: Abderrahmane
+  year: 2013
+  container-title: Cybernetics and Intelligent Systems Robotics, Automation and Mechatronics (CISRAM'2013)
+  type: book
+  URL: http://hal-lirmm.ccsd.cnrs.fr/lirmm-00863931
+- id: moulard:isr:2013
+  title: "Optimization-based Motion Retargeting Integrating Spatial and Dynamic Constraints"
+  author:
+  - family: Moulard
+    given: Thomas
+  - family: Yoshida
+    given: Eiichi
+  - family: Nakaoka
+    given: Shin'Ichiro
+  year: 2013
+  type: book
+  container-title: "44th International Symposium on Robotics (ISR)"
+  URL: http://hal.archives-ouvertes.fr/hal-00908568
+- id: elkhoury:thesis:2013
+  title: "Planning Optimal Motions for Anthropomorphic Systems"
+  author:
+  - family: El Khoury
+    given: Antonio
+  year: 2013
+  type: thesis
+  URL: http://hal.archives-ouvertes.fr/tel-00833019
+- id: elkhoury:icra:2013
+  title: "Optimal motion planning for humanoid robots"
+  author:
+  - family: El Khoury
+    given: Antonio
+  - family: Lamiraux
+    given: Florent
+  - family: Taïx
+    given: Michel
+  year: 2013
+  container-title: "IEEE International Conference on Robotics and Automation (ICRA)"
+  type: book
+  URL: http://hal.archives-ouvertes.fr/index.php?halsid=a9kr3586qr6mi2nj3tkk365s90&view_this_doc=hal-00715419&version=3
+- id: bouyarmane:humanoids:2012
+  title: "Exploring Humanoid Robot Locomotion Capabilities in Virtual Disaster Response Scenarios"
+  author:
+  - family: Bouyarmane
+    given: Karim
+  - family: Vaillant
+    given: Joris
+  - family: Keith
+    given: François
+  - family: Kheddar
+    given: Abderrahmane
+  year: 2012
+  container-title: "Humanoids'12: 12th International Conference on Humanoid Robots"
+  type: book
+  URL: http://hal-lirmm.ccsd.cnrs.fr/lirmm-00765817
+- id: bouyarmane:thesis:2011
+  title: "On Autonomous Humanoid Robots: Contact Planning for Locomotion and Manipulation"
+  author:
+  - family: Bouyarmane
+    given: Karim
+  year: 2011
+  type: thesis
+  URL: http://tel.archives-ouvertes.fr/tel-00806453
+- id: moulard:2010
+  title: "Collision-free walk planning for humanoid robots using numerical optimization"
+  author:
+  - family: Moulard
+    given: Thomas
+  - family: Lamiraux
+    given: Florent
+  - family: Wieber
+    given: Pierre-Brice
+  year: 2010
+  URL: http://hal.archives-ouvertes.fr/hal-00486997

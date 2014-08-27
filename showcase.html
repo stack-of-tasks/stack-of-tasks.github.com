@@ -1,0 +1,153 @@
+---
+layout: default
+title: Showcase
+group: "navigation"
+disqus: true
+---
+
+<h1 id="showcase" class="page-header">{{ page.title }}</h1>
+
+<h2>Gallery</h2>
+<a name="top"></a>
+
+<div style="padding: 1em"></div>
+
+    <section class="slider">
+      <div>
+<center>
+<table>
+<tr>
+	  {% for project in site.data.projects %}
+
+    {% capture column %}{% cycle 1, 2, 3, 4, 5, 6%}{% endcapture %}
+    {% if column == '1' %}
+    </tr><tr>
+	  {% endif %}
+
+    <td width="200" valign="top">
+    <center>
+	  {% if project.image %}
+            <a href="#{{ project.name }}">
+              <img height="200" src="assets/showcase/{{ project.image }}"
+		   alt="{{ project.title }}"
+		   title="{{ project.title }}"/>
+            </a>
+            {% if project.title %}
+            <p class="flex-caption">{{ project.title }}
+	            {% if project.video %}
+                  <a href="https://www.youtube.com/watch?v={{ project.video.youtube_id}}">
+                  <span class='glyphicon glyphicon-film'></span></a>
+	            {% endif %}
+            </p>
+            {% endif %}
+          </li>
+	  {% else if project.video %}
+          <li class="slide play3">
+            <iframe width="560" height="200" id="youtubevideo"
+		    title="{{ project.title }}"
+		    src="http://www.youtube.com/embed/{{ project.video.youtube_id}}?enablejsapi=1&version=3&playerapiid=youtubevideo&vq=hd720"
+		    allowfullscreen frameborder="0"></iframe>
+          </li>
+	  {% endif %}
+    </center>
+    </td>
+	  {% endfor %}
+</tr>
+</table>
+</center>
+</section>
+
+<!-- Load FlexSlider Library -->
+<script src="js/flexslider/jquery.flexslider-min.js"></script>
+
+<!-- Load FlexSlider style -->
+<link href="js/flexslider/flexslider.css" rel="stylesheet">
+
+<!-- Load custom slider style -->
+<link rel="stylesheet" href="slider.css" type="text/css">
+<script src="http://a.vimeocdn.com/js/froogaloop2.min.js"></script>
+
+<!-- Load YouTube player -->
+<script src="js/flexslider-youtube.js"></script>
+<script src="js/jquery.fitvids.js"></script>
+
+<script type="text/javascript">
+  // Initialize FlexSlider
+  $(window).load(function() {
+  $('.flexslider')
+  .fitVids()
+  .flexslider({
+  animation: "slide",
+  //controlNav: "thumbnails",
+  directionNav: true,
+  // TODO: need to stop slideshow while playing videos to handle this
+  slideshow:false,
+  slideshowSpeed: 7500,
+  animationLoop: true,
+  animationSpeed: 600,
+  pauseOnAction: true,
+  pauseOnHover: true,
+  touch: true,
+  smoothHeight: true,
+  video: true,
+  before: function(slider){
+  if (slider.slides.eq(slider.currentSlide).find('iframe').length !== 0)
+  $f( slider.slides.eq(slider.currentSlide).find('iframe').attr('id') ).api('pause');
+  }
+  });
+  });
+</script>
+
+<div style="padding: 2em"></div>
+
+<h2>Description</h2>
+
+
+<div class="table-responsive">
+  <table class="table table-condensed" id="status">
+    <tbody>
+	  {% for project in site.data.projects %}
+    {% capture column %}{% cycle 1, 2, 3, 4, 5, 6, 7, 8, 9, 10%}{% endcapture %}
+    {% if column == '1' %}
+    </tr>
+      <tr bgcolor="#a7bbfb">
+        <td><center>Title</center></td>
+        <td><center>Description</center></td>
+        <td><center>Lab</center></td>
+        <td>Bib</td>
+        <td>Video</td>
+        <td><a href= "#top">
+<span class="glyphicon glyphicon-arrow-up"></span></a>
+</td>
+      </tr>
+    <tr>
+	  {% endif %}
+
+      <tr id="{{ paper.id }}">
+        <td id="{{ paper.id }}-title">
+        <a name= "{{ project.name }}"></a>
+        {{ project.title }}</td>
+        <td id="{{ paper.id }}-description">{{ project.description }}</td>
+        <td id="{{ paper.id }}-year">{{project.lab}}</td>
+        <td id="{{ paper.id }}-url">
+          {% if paper.URL %}
+          <a href="{{ paper.URL }}" target="_blank">
+            <span class='glyphicon glyphicon-file'></span>
+          </a>
+          {% endif %}
+        </td>
+        <td><center>
+	    {% if project.video %}
+          <a href="https://www.youtube.com/watch?v={{ project.video.youtube_id}}">		 
+          <span class='glyphicon glyphicon-film'></span></a>
+	    {% endif %}
+        </center></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div style="padding: 10em"></div>
+
+<!-- vim: set ts=2 sw=2 ft=liquid si: -->

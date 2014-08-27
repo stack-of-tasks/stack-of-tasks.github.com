@@ -1,0 +1,69 @@
+<p>
+The core of the stack of tasks mechanism is independent from ROS: an execution is hence realized in a closed environment
+(the entities are only defined in the python environment and are only accessible via python commands).
+However, some bridges with ROS exist: for the display, but also to send and receive some pieces of data.
+</p>
+
+
+<h2>Signal to ROS message</h2>
+Two entities allow you to exchange data from the ROS environment to the stack of tasks one, 
+and convert ros messages in sot signals, namely <code>rosPublish</code> and <code>rosSubscribe</code>.
+
+Here is a example of publication of matrix homogeneous from the sot environment to the ROS environment:
+<pre><code class="python">ros.rosPublish.add('matrixHomoStamped', robot.frames['rightGripper'].name +'_position', 'right_gripper')
+ros.rosPublish.displaySignals()
+--- &lt;rosPublish&gt; signal list: 
+    |-- &lt;Sig:N12dynamicgraph10RosPublishE(rosPublish)::input(MatrixHomo)::romeo_rightHand_position (Type Cst) AUTOPLUGGED
+    `-- &lt;Sig:N12dynamicgraph10RosPublishE(rosPublish)::input(int)::trigger (Type Fun)
+</code></pre>
+
+<pre><code class="bash">rostopic list 
+/right_gripper
+</code></pre>
+
+<p>
+This creates an input signal for the ros.rosPublish entity (<code class="python">'romeo_rightHand_position'</code>), as well as the rostopic element <code class="bash">/right_gripper</code>.</br>
+Please note that this alone does <b>NOT</b> publish anything. In order to publish something, it is hence necessary to a signal to the one created in rosPublish.
+</p>
+
+<pre><code class="python">plug(robot.frames['rightGripper'].position, ros.rosPublish.signal(robot.frames['rightGripper'].name +'_position'))
+</code></pre>
+
+<p>
+Now you are publishing:
+</p>
+<pre><code class="bash">rostopic echo -n 1 /right_gripper
+header: 
+  seq: 24577
+  stamp: 
+    secs: 1408440100
+    nsecs: 786866991
+  frame_id: /dynamic_graph/world
+child_frame_id: ''
+transform: 
+  translation: 
+    x: 0.12276189235
+    y: -0.242369571396
+    z: 0.659561031231
+  rotation: 
+    x: -0.0883991792798
+    y: 0.534618973732
+    z: -0.0459091290832
+    w: 0.839202284813
+</code></pre>
+
+More details are provided <a href="http://wiki.ros.org/dynamic_graph_bridge">on the ros wiki</a>
+
+<h2>ROS tf to signal</h2>
+Importing a tf requires to convert first the tf into a matrix homogeneous in order to import it in the stack of tasks.
+The child_frame HAS TO be the odom frame, which is the base for the SoT environment.
+Hence, in order to use the position of an object in the stack of tasks, you can add
+this to the launch file:
+
+<pre><code class="xml">&lt;node name="object"    pkg="dynamic_graph_bridge" type="tf_publisher"&gt;
+  &lt;param name="frame"       type="string" value="object" /&gt;
+  &lt;param name="child_frame" type="string" value="odom" /&gt;
+  &lt;param name="topic"       type="string" value="object" /&gt;
+&lt;/node&gt;
+</code></pre>
+

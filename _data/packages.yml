@@ -1,0 +1,36 @@
+- name: Dynamic Graph
+  github: dynamic-graph
+  status: stable
+
+- name: Dynamic Graph Python
+  github: dynamic-graph-python
+  status: stable
+
+- name: SoT Core
+  github: sot-core
+  status: stable
+
+- name: SoT Tools
+  github: sot-tools
+  status: stable
+
+- name: SoT Application
+  github: sot-application
+  status: stable
+
+- name: Soth
+  github: soth
+  status: stable
+
+- name: SoT Dyninv
+  github: sot-dyninv
+  status: stable
+
+- name: SoT Pattern Generator
+  github: sot-pattern-generator
+  status: stable
+
+- name: SoT Romeo
+  github: sot-romeo
+  status: stable
+

@@ -1,0 +1,204 @@
+<h2>First steps with dynamic graph</h2>
+<p>
+  We assume that the stack of tasks has been installed using the installation instruction provided
+  <a href="https://github.com/Stack-Of-Tasks/sot-doc/wiki/Installation">there</a>.
+</p>
+
+<h3>dynamic-graph 101</h3>
+
+This first tutorial focuses on the dynamic-graph mecanism, which is the backbone of the stack of tasks framework.
+This tutorial details ...
+
+<p>
+  As a toy example, let's realize this operation <code class="python">res=(a+b) * (c+d)</code> using dynamic-graph elements.
+  The corresponding code would be this:
+</p>
+
+<pre><code class="python">from dynamic_graph import plug
+from dynamic_graph.sot.core.operator import Add_of_double
+from dynamic_graph.sot.core.operator import Multiply_of_double
+a=1
+b=2
+c=3
+d=4
+
+# Crate  the entities
+ad1  = Add_of_double('ad1')
+ad2  = Add_of_double('ad2')
+mult = Multiply_of_double('mult')
+
+# Fix the values of the input for the first operation
+ad1.sin1.value = a
+ad1.sin2.value = b
+
+# Fix the values of the input for the second operation
+ad2.sin1.value = c
+ad2.sin2.value = d
+
+# plug all the signals
+plug(ad1.sout, mult.sin1)
+plug(ad2.sout, mult.sin2)
+</code></pre>
+
+In order to obtain the result of the multiplication, let's do:
+<pre><code class="python">mult.sout.value
+#> 0</code></pre>
+
+This is normal.
+At the creation of an entity, each of the signals has a default value associated to the time 0.
+In order to have the new value, it is necessary to increment the time, so as to trigger the recomputation.
+<pre><code class="python">mult.sout.time
+#> 0
+mult.sout.recompute(1)
+mult.sout.value
+#> 21</code></pre>
+
+Let's now change one of the inputs of the entity ad1.
+<pre><code class="python">ad1.sin1.value = 0</code></pre>
+
+The result becomes:
+<pre><code class="python">mult.sout.recompute(2)
+mult.sout.value
+#> 14</code></pre>
+
+Note that the intermediary signal ad1.sout, has been updated, while ad2.sout hasn't:
+<pre><code class="python">ad1.sout.time
+#> 2
+ad2.sout.time
+#> 1</code></pre>
+
+<h3>Dynamic-graph operations</h3>
+
+<p>Here is a list of some basic operations that can be run on the entities/signals.
+  A more complete list can be found in the cheat sheet (Documentation > Cheat sheet).
+</p>
+
+<table  border="1">
+  <tr>
+    <td colspan="2"><center><h4>Entity manipulation</h4></center></td>
+  </tr>
+
+  <tr>
+    <td><code class="python">entity.help()</code></br></td>
+    <td>Displays the help for an entity, namely the commands with their description</td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <pre><code class="python">robot.dynamic.help()
+No header documentation.
+List of commands:
+-----------------
+addJoint:       	    Add a child joint to a joint
+createJacobian: 	Create a jacobian (world frame) signal only for one joint.
+...</code></pre>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td><code class="python">entity.help('command')</code></br></td>
+    <td>Displays the complete help for the command (number of argument...)</td>
+  </tr>
+  <tr>
+    <td colspan="2"><pre><code class="python">robot.dynamic.help('createOpPoint')
+createOpPoint:
+    
+    Create an operational point attached to a robot joint local frame.
+    
+      Input: 
+        - a string: name of the operational point,
+        - a string: name the joint, among (gaze, left-ankle, right ankle
+          , left-wrist, right-wrist, waist, chest).</code></pre>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td><code class="python">entity.commands()</br></td>
+    <td>Returns the list of commands of an entity, without description</td>
+  </tr>
+  <tr>
+    <td><code class="python">entity.displaySignals()</br></td>
+    <td>Lists the signals of an entity, indicates
+      whether they are plugged or not.
+      <ul>
+        <li>AUTOPLUGGED: the signal is plugged to a signal of this entity, eventually internal</li>
+        <li>PLUGGED: the signal is plugged to another one, from an other entity</li>
+        <li>UNPLUGGED: the signal is not plugged. Requiring its recomputation will cause some issues</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <pre><code class="python">robot.dynamic.displaySignals()
+--- &lt;hrp4_dynamic> signal list: 
+    |-- &lt;Sig:sotDynamic(hrp4_dynamic)::output(matrix)::JLF (Type Fun)
+    ...
+    |-- &lt;Sig:sotDynamic(hrp4_dynamic)::input(vector)::acceleration (Type Cst) AUTOPLUGGED
+    ...
+    |-- &lt;Sig:sotDynamic(hrp4_dynamic)::input(vector)::ffvelocity (Type Cst) UNPLUGGED
+    ...
+    |-- &lt;Sig:sotDynamic(hrp4_dynamic)::input(vector)::position (Type Cst) -->-- PLUGGED
+    ...
+    `-- &lt;Sig:sotDynamic(hrp4_dynamic)::output(vector)::zmp (Type Fun)</code></pre>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2"><center><h4>Signal manipulation</h4></center></td>
+  </tr>
+  <tr>
+    <td><code class="python">entity.signal.value</code></br></td>
+    <td>Returns the current value of a signal </td>
+  </tr>
+  <tr>
+    <td colspan="2"><pre><code class="python">robot.dynamic.com.value
+(0.0216369554098584, 0.0004691300133536782, 0.7773273884899862)      </code></pre>
+    </td>
+  </tr>
+
+  <tr>
+    <td><code class="python">entity.signal.time</code></br></td>
+    <td>Returns the current time of a signal </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <pre><code class="python">robot.dynamic.time
+0      </code></pre>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td><code class="python">entity.signal.recompute(T)</code></br></td>
+    <td>Force the recomputation of the signal for
+      time T (only effective it the given time is
+      greater than the current time).</td>
+  </tr>
+
+  <tr>
+    <td><code class="python">entity.signal.deps(X)</code></br></td>
+    <td>Displays the signals on which entity.signal depends. 
+      The tree goes to the depth X (X>=0).</td>
+  </tr>
+    <td colspan="2"><pre><code class="python">robot.dynamic.com.deps(1)
+-- Sig:sotDynamic(hrp4_dynamic)::output(vector)::com (Type Fun) (t=0 (/1) )
+   `-- Sig:sotDynamic(hrp4_dynamic)::intern(dummy)::newtoneuleur (Type Fun) (t=1 (/1) )
+      `-- ...</code></pre>
+      <pre><code class="python">robot.dynamic.position.deps(2)
+-- sotDynamic(hrp4_dynamic)::input(vector)::position -->-- Sig:Device(hrp4)::output(vector)::state (Type Cst)</code></pre>
+    </td>
+
+
+
+</table>
+
+<h2>Examples</a></h2>
+
+<p>
+  In the proposed examples, the entity graph is created in a terminal python interpreter and the simulation loop is run within this terminal.
+  More details on the internal graph structure used in the stack of tasks framework are provided in
+  the <a href="https://github.com/jrl-umi3218/dynamic-graph-tutorial">dynamic-graph-tutorial</a>.
+</p>
+

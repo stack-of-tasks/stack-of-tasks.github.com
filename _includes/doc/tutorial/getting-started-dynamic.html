@@ -1,0 +1,61 @@
+<h2>Kinematic robot simulations</h2>
+
+<p>
+  We assume that (1) the stack of tasks has been installed using the installation instruction provided
+  <a href="https://github.com/Stack-Of-Tasks/sot-doc/wiki/Installation">there</a> and (2) that you understood the stack of tasks mecanism.
+</p>
+
+
+
+
+
+<h2>sot-concept.py: understanding the stack of task mechanism</h2>
+
+
+This script aims at understanding the mechanisms of a hierarchy of task.
+
+<p>In this script, the robot Romeo has to grasp a ball. 
+  Several sets of stack are tested in order to exemplify the influence and necessity of elements/tasks 
+  such as com control, joint limits, damping... during the realization of a simple motion.
+</p>
+
+<p>
+  The purpose of this script is to see by the example the possible faulty behaviors that 
+  can appear (divergence, loss of stability ...) when the stack is incomplete.
+</p>
+
+<ol>
+  <li> Only the task RH</br>
+    Since there is no constraint on the feet, the robot flies to the objective
+  </li>
+
+  <li> Task RH + foot constraint, balance is kept</br>
+    The robot put its hand at the desired place while keeping its feet on the ground
+  </li>
+
+  <li> Task RH + foot constraint, balance is lost</br>   
+    The robot put its hand at the desired place while keeping its feet on the ground, but the balance of the robot is lost due to the desired position of the hand
+  </li>
+
+  <li> Task RH + foot constraint + COM=</br>
+    The robot put its hand at the desired place while keeping its feet on the ground and its balance, but enters in self collision during its motion
+  </li>
+
+  <li> Task RH + foot constraint + COM= + JL</br>
+    The self collision is solved by adding a artificial joint limit.
+  </li>
+
+  <li> Task RH + foot constraint + COM<   </li>
+
+
+					  <li> Task RH + foot constraint + COM= + SINGULARITY</br>
+					    The robot put its hand at the desired place. 
+					    Due to the motion of the ball (type <code>i</code> to move it), the robot goes into a near singular configuration and the control law reaches high values, causing a strange behavior of the robot.
+					  </li>
+
+  <li>Task RH + foot constraint + COM= + SINGULARITE + DAMPING</br>
+    In this case, some damping is added to prevent high control values.
+  </li>
+</ol>
+Note: you can change the configuration by re-typing <code>menu()</code>
+

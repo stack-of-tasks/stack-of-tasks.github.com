@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.title }}</title>
+
+    <!-- Bootstrap -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Jekyll Syntax Highlighting -->
+    <link href="syntax.css" rel="stylesheet">
+
+    <!-- Website specific stylesheet -->
+    <link href="style.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    {% unless page.mathjax == null %}
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript"
+	    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    {% endunless %}
+
+    {% unless page.highlight == null %}
+    <!-- highlight.js -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/styles/github.min.css" rel="stylesheet">
+    <script type="text/javascript"
+	    src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/highlight.min.js">
+    </script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    {% endunless %}
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-34448532-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+    <script type="text/javascript" src="/js/oauth.min.js"></script>
+
+    <!-- favicons generated with http://realfavicongenerator.net -->
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:site_name" content="SoT">
+    <meta property="og:description" content="Stack of tasks">
+    <meta property="og:url" content="http://stack-of-tasks.github.io/">
+    <meta property="og:locale" content="en_US">
+
+    <meta property="fb:page_id" content="234139373456687">
+    <meta property="fb:admins" content="719767467" />
+
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Stack of Tasks</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+	    {% include nav_element.html title="<span class='glyphicon glyphicon-download'></span> Download" url="/download.html" %}
+	    <li class="dropdown">
+	      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book"></span>
+		Documentation <b class="caret"></b></a>
+	      <ul class="dropdown-menu">
+		{% include nav_element.html title="Robots" url="/robots.html" %}
+		{% include nav_element.html title="Showcase" url="/showcase.html" %}
+		{% include nav_element.html title="FAQ" url="/faq.html" %}
+		{% include nav_element.html title="Cheat sheet" url="http://db.tt/dODiGhlN" %}
+		<li class="divider"></li>
+		{% include nav_element.html title="API Documentation" url="/documentation.html" %}
+	      </ul>
+	    </li>
+	    <li class="dropdown">
+	      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-play"></span>
+		Tutorials <b class="caret"></b></a>
+	      <ul class="dropdown-menu">
+		{% include nav_element.html title="Dynamic graph 101" url="/tuto_dynamic_graph.html" %}
+		{% include nav_element.html title="Getting Started" url="/tuto_getting_started.html" %}
+		{% include nav_element.html title="Bridge with ROS" url="/tuto_bridge_with_ros.html" %}
+		{% include nav_element.html title="Wrap the controller"  url="/tuto_wrap_controller.html" %}
+		{% include nav_element.html title="Add your robot"  url="/tuto_add_your_robot.html" %}
+	      </ul>
+	    </li>
+
+	    <li class="dropdown">
+	      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>
+		Development <b class="caret"></b></a>
+	      <ul class="dropdown-menu">
+		{% include nav_element.html title="Development Dashboard" url="/development.html" %}
+		<li class="divider"></li>
+		<li><a href="http://www.github.com/stack-of-tasks/">View on GitHub</a></li>
+	      </ul>
+	    </li>
+            <li>
+              <a href="mailto:hpp AT laas DOT fr?Subject=[SoT]" target="_top">
+		<span class="glyphicon glyphicon-message_out"></span> 
+		Support</a>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div><!--/.container-fluid -->
+    </div>
+
+    <div class="container">
+      {{ content }}
+    </div> <!-- /container -->
+
+    {% if page.disqus %}
+    {% include disqus.html %}
+    {% endif %}
+
+    <div class="container">
+      <!-- FOOTER -->
+      <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2014 <a href="authors.html">Stack of Tasks Team</a> &middot; <a href="http://www.github.com/stack-of-tasks">GitHub</a>
+	  &middot;
+	</p>
+      </footer>
+    </div> <!-- /container -->
+  </body>
+</html>
