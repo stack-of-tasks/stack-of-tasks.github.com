@@ -11,55 +11,45 @@ group: "navigation"
 
 <div style="padding: 1em"></div>
 
-    <section class="slider">
-      <div>
-<center>
-<table>
-<tr>
-	  {% for project in site.data.projects %}
-
-    {% capture column %}{% cycle 1, 2, 3, 4, 5, 6%}{% endcapture %}
-    {% if column == '1' %}
-    </tr><tr>
-	  {% endif %}
-
-    <td width="200" valign="top">
+<section class="slider">
+  <div>
     <center>
-	  {% if project.image %}
-            <a href="#{{ project.name }}">
-              <img height="200" src="assets/showcase/{{ project.image }}"
-		   alt="{{ project.title }}"
-		   title="{{ project.title }}"/>
-            </a>
-            {% if project.title %}
-            <p class="flex-caption">{{ project.title }}
-	            {% if project.video %}
-          	    {% if project.video.youtube_id %}
-                  <a href="https://www.youtube.com/watch?v={{ project.video.youtube_id}}">		 
-                  <span class='glyphicon glyphicon-film'></span></a>
-          	    {% endif %}
-          	    {% if project.video.file_url %}
-                  <a href="{{ project.video.file_url}}">		 
-                  <span class='glyphicon glyphicon-film'></span></a>
-          	    {% endif %}
-	            {% endif %}
-            </p>
-            {% endif %}
-          </li>
-	  {% else if project.video %}
-          <li class="slide play3">
-            <iframe width="560" height="200" id="youtubevideo"
-		    title="{{ project.title }}"
-		    src="http://www.youtube.com/embed/{{ project.video.youtube_id}}?enablejsapi=1&version=3&playerapiid=youtubevideo&vq=hd720"
-		    allowfullscreen frameborder="0"></iframe>
-          </li>
+      <table>
+	<tr>
+	  {% for project in site.data.projects %}
+	  {% capture column %}{% cycle 1, 2, 3, 4, 5, 6%}{% endcapture %}
+	  {% if column == '1' %}
+	</tr><tr>
 	  {% endif %}
-    </center>
-    </td>
+
+	  <td width="200" valign="top"><center>
+	      {% if project.image %}
+              <a href="#{{ project.name }}">
+		<img height="200" src="assets/showcase/{{ project.image }}"
+		     alt="{{ project.title }}"
+		     title="{{ project.title }}"/>
+              </a>
+              {% if project.title %}
+              <p class="flex-caption">{{ project.title }}
+	        {% if project.video %}
+          	{% if project.video.youtube_id %}
+                <a href="https://www.youtube.com/watch?v={{ project.video.youtube_id}}">		 
+                  <span class='glyphicon glyphicon-film'></span></a>
+          	{% endif %} <!-- project.video.youtube_id -->
+          	{% if project.video.file_url %}
+                <a href="{{ project.video.file_url}}">
+                  <span class='glyphicon glyphicon-film'></span></a>
+          	{% endif %} <!-- project.video.file_url -->
+	        {% endif %}
+              </p>
+              {% endif %}
+	      {% endif %}
+	    </center>
+	  </td>
 	  {% endfor %}
-</tr>
-</table>
-</center>
+	</tr>
+      </table>
+    </center>
 </section>
 
 <!-- Load FlexSlider Library -->
@@ -111,56 +101,56 @@ group: "navigation"
 <div class="table-responsive">
   <table class="table table-condensed" id="status">
     <tbody>
-	  {% for project in site.data.projects %}
-    {% capture column %}{% cycle 1, 2, 3, 4, 5, 6, 7, 8, 9, 10%}{% endcapture %}
-    {% if column == '1' %}
-    </tr>
-      <tr bgcolor="#a7bbfb">
-        <td><center>Title</center></td>
-        <td><center>Description</center></td>
-        <td><center>Lab</center></td>
-        <td>Bib</td>
-        <td>Video</td>
-        <td><a href= "#top">
-<span class="glyphicon glyphicon-arrow-up"></span></a>
-</td>
-      </tr>
-    <tr>
-	  {% endif %}
+      {% for project in site.data.projects %}
+      {% capture column %}{% cycle 1, 2, 3, 4, 5, 6, 7, 8, 9, 10%}{% endcapture %}
+      {% if column == '1' %}
+</tr>
+<tr bgcolor="#a7bbfb">
+  <td><center>Title</center></td>
+  <td><center>Description</center></td>
+  <td><center>Lab</center></td>
+  <td>Bib</td>
+  <td>Video</td>
+  <td><a href= "#top">
+      <span class="glyphicon glyphicon-arrow-up"></span></a>
+  </td>
+</tr>
+<tr>
+  {% endif %}
 
-      <tr id="{{ project.id }}">
-        <td id="{{ project.id }}-title">
-        <a name= "{{ project.name }}"></a>
-        {{ project.title }}</td>
-        <td id="{{ project.id }}-description">{{ project.description }}</td>
-        <td id="{{ project.id }}-lab">
-    	  {% for proj in project.lab %}
-          {{proj}}</br>
-    	  {% endfor %}
-        </td>
-        <td id="{{ project.id }}-url">
-          {% if project.url %}
-          <a href="{{ project.url }}" target="_blank">
-            <span class='glyphicon glyphicon-file'></span>
-          </a>
-          {% endif %}
-        </td>
-        <td><center>
-	    {% if project.video %}
-  	    {% if project.video.youtube_id %}
-          <a href="https://www.youtube.com/watch?v={{ project.video.youtube_id}}">		 
-          <span class='glyphicon glyphicon-film'></span></a>
-  	    {% endif %}
-  	    {% if project.video.file_url %}
-          <a href="{{ project.video.file_url}}">		 
-          <span class='glyphicon glyphicon-film'></span></a>
-  	    {% endif %}
-	    {% endif %}
-        </center></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<tr id="{{ project.id }}">
+  <td id="{{ project.id }}-title">
+    <a name= "{{ project.name }}"></a>
+    {{ project.title }}</td>
+  <td id="{{ project.id }}-description">{{ project.description }}</td>
+  <td id="{{ project.id }}-lab">
+    {% for proj in project.lab %}
+    {{proj}}</br>
+    {% endfor %}
+  </td>
+  <td id="{{ project.id }}-url">
+    {% if project.url %}
+    <a href="{{ project.url }}" target="_blank">
+      <span class='glyphicon glyphicon-file'></span>
+    </a>
+    {% endif %}
+  </td>
+  <td><center>
+      {% if project.video %}
+      {% if project.video.youtube_id %}
+      <a href="https://www.youtube.com/watch?v={{ project.video.youtube_id}}">
+        <span class='glyphicon glyphicon-film'></span></a>
+      {% endif %}
+      {% if project.video.file_url %}
+      <a href="{{ project.video.file_url}}">
+        <span class='glyphicon glyphicon-film'></span></a>
+      {% endif %}
+      {% endif %}
+  </center></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
 </div>
 
 <div style="padding: 10em"></div>
