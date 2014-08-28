@@ -34,8 +34,14 @@ group: "navigation"
             {% if project.title %}
             <p class="flex-caption">{{ project.title }}
 	            {% if project.video %}
-                  <a href="https://www.youtube.com/watch?v={{ project.video.youtube_id}}">
+          	    {% if project.video.youtube_id %}
+                  <a href="https://www.youtube.com/watch?v={{ project.video.youtube_id}}">		 
                   <span class='glyphicon glyphicon-film'></span></a>
+          	    {% endif %}
+          	    {% if project.video.file_url %}
+                  <a href="{{ project.video.file_url}}">		 
+                  <span class='glyphicon glyphicon-film'></span></a>
+          	    {% endif %}
 	            {% endif %}
             </p>
             {% endif %}
@@ -122,23 +128,33 @@ group: "navigation"
     <tr>
 	  {% endif %}
 
-      <tr id="{{ paper.id }}">
-        <td id="{{ paper.id }}-title">
+      <tr id="{{ project.id }}">
+        <td id="{{ project.id }}-title">
         <a name= "{{ project.name }}"></a>
         {{ project.title }}</td>
-        <td id="{{ paper.id }}-description">{{ project.description }}</td>
-        <td id="{{ paper.id }}-year">{{project.lab}}</td>
-        <td id="{{ paper.id }}-url">
-          {% if paper.URL %}
-          <a href="{{ paper.URL }}" target="_blank">
+        <td id="{{ project.id }}-description">{{ project.description }}</td>
+        <td id="{{ project.id }}-lab">
+    	  {% for proj in project.lab %}
+          {{proj}}</br>
+    	  {% endfor %}
+        </td>
+        <td id="{{ project.id }}-url">
+          {% if project.url %}
+          <a href="{{ project.url }}" target="_blank">
             <span class='glyphicon glyphicon-file'></span>
           </a>
           {% endif %}
         </td>
         <td><center>
 	    {% if project.video %}
+  	    {% if project.video.youtube_id %}
           <a href="https://www.youtube.com/watch?v={{ project.video.youtube_id}}">		 
           <span class='glyphicon glyphicon-film'></span></a>
+  	    {% endif %}
+  	    {% if project.video.file_url %}
+          <a href="{{ project.video.file_url}}">		 
+          <span class='glyphicon glyphicon-film'></span></a>
+  	    {% endif %}
 	    {% endif %}
         </center></td>
       </tr>
