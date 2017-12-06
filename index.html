@@ -4,8 +4,154 @@ title:
 sitemap:
 ---
 
+<div class="container">
+  <div class="jumbotron">
+    <a href="http://projects.laas.fr/gepetto/index.php">
+    <img src="{{ site.baseurl }}/assets/logo-medium-black.png" alt="Gepetto team logo" align="left"
+    style="max-width: 15%; margin: 1em;"/></a>
+
+  <h1 style="display: inline-block;">Stack of Tasks</h1>
+
+  <p> Software for Controlling Redundant Robots </p>
+
+  <p>
+  <a class="btn btn-lg btn-primary" href="download.html?branch=master" role="button">Get started now &raquo;</a>
+  </p>
+</div>
+</div>
+
+<div class="container marketing">
+
+  <div class="row featurette" id="acknowledgement">
+    <div class="col-md-5 text-center">
+      <div class="row">
+        <div class="col-md-6" style="padding-top:0.5em; padding-bottom:0.5em;">
+          <a href="http://projetromeo.com">
+            <img title="Projet ROMEO 2" id="projetromeo_logo" src="{{ site.baseurl }}/assets/logo_romeo.jpg" alt="Logo projet ROMEO"
+            style="height: 70px;"/>
+          </a>
+        </div>
+        <div class="col-md-6" style="padding-top:0.5em; padding-bottom:0.5em;">
+          <a href="http://www.euroc-project.eu">
+            <img title="EUROC project" id="euroc_logo" src="{{ site.baseurl }}/assets/logo_euroc.png" alt="Logo EUROC project"
+            style="height: 70px;"/>
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6" style="padding-top:0.5em; padding-bottom:0.5em;">
+          <a href="http://erc.europa.eu/projects-and-results/erc-funded-projects/actanthrope">
+            <img title="ERC Actanthrope" id="ercactanthrope_logo" src="{{ site.baseurl }}/assets/logo_erc.jpg" alt="Logo ERC"
+            style="height: 110px;"/>
+          </a>
+        </div>
+        <div class="col-md-6" style="padding-top:0.5em; padding-bottom:0.5em;">
+          <a href="http://orb.iwr.uni-heidelberg.de/koroibot/">
+            <img title="Koroibot" id="koroibot_logo" src="{{ site.baseurl }}/assets/logo_koroibot.jpg" alt="EU Project: Koroibot"
+            style="height: 110px;"/>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <h2 class="featurette-heading">Acknowledgement</h2>
+      <!--<p class="lead">-->
+      <p>
+      This work has been partially supported by:
+      <ul>
+        <li>FP7 Koroibot</li>
+        <li>Euroc project</li>
+        <li>ERC Actanthrope</li>
+        <li>PSPC Romeo 2</li>
+        <li>ANR Entracte</li>
+      </ul>
+      </p>
+    </div>
+    <div class="col-md-2 text-center">
+      <div class="row">
+        <div class="col-md-12">
+          <a href="https://ec.europa.eu/research/fp7/index_en.cfm">
+            <img title="Framework Program 7" id="FP7_logo" src="{{ site.baseurl }}/assets/logo_fp7.jpg" alt="Framework Program 7"
+            style="height: 110px;"/>
+          </a>
+        </div>
+        <div class="row">
+          <div class="col-md-12" style="padding-top:0.5em; padding-bottom:0.5em;">
+            <a href="http://www.agence-nationale-recherche.fr">
+              <img title="ANR project" id="anr_logo" src="{{ site.baseurl }}/assets/logo_anr.gif" alt="Logo ANR project"
+              style="height: 70px;"/>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="featurette-divider">
+</div>
+
 <div style="padding: 2em"></div>
 
+<div id="videos">
+{% include carrousel.html carrousel=site.data.projects %}
+</div>
+
+<div style="padding: 2em"></div>
+
+<div class="container marketing">
+  <hr class="featurette-divider">
+  <div class="row featurette">
+    <div class="col-md-7">
+      <h2 class="featurette-heading">Real time Motion Control in C++</h2>
+      <p class="lead">
+      SoT is a C++ Software Developement Kit implementing a control architecture for redundant robots and more specifically for humanoid robots.
+      The framework is flexible enough to implement hierarchical control and weighted control.
+
+      Robots can be loaded from URDF model. The rigid body dynamics is provided through <a href="https://github.com/stack-of-tasks/pinocchio">pinocchio</a>.
+
+      It is a collection of software packages handled by cmake and pkg-config.
+      </p>
+    </div>
+    <div class="col-md-5">
+      &nbsp;
+    </div>
+  </div>
+
+  <hr class="featurette-divider">
+  <div class="row featurette">
+    <div class="col-md-5">
+      <img src="{{ site.baseurl }}/assets/python-logo.png" alt="Python logo" style="max-width: 95%;" />
+    </div>
+    <div class="col-md-7">
+      <h2 class="featurette-heading">Python interface for quick prototyping of problems</h2>
+      <p class="lead">
+	Python scripting is embedded in SoT.
+	
+	A few lines of Python code allows users to
+	<a href="{{ site.baseurl }}/tutorials.html">solve inverse kinematics problems</a> or
+	<a href="https://github.com/stack-of-tasks/sot-torque-control">inverse dynamics problems</a>.
+	It can be interfaced with various middlewares.
+	The current most supported is  <a href="http://wiki.ros.org/">ROS</a>.
+      </p>
+    </div>
+  </div>
+
+  <hr class="featurette-divider">
+  <div class="row featurette">
+    <div class="col-md-7">
+      <h2 class="featurette-heading">Walking Pattern Generator</h2>
+      <p class="lead">
+      A walking pattern generator library is provided to generate Center-Of-Pressure, Center-Of-Mass and feet trajectories which are balanced.
+      </p>
+    </div>
+    <div class="col-md-5">
+      <!--      <img src="{{ site.baseurl }}/assets/hpp-gui.png" alt="hpp-gui screenshot" style="max-width: 95%;" /> -->
+      &nbsp;
+    </div>
+  </div>
+  <!-- /END THE FEATURETTES -->
+</div>
+<hr class="featurette-divider">
 <!-- place somewhere in the <body> of your page -->
 <section>
   <center>
