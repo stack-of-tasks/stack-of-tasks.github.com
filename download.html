@@ -11,21 +11,20 @@ group: navigation
 
 <h2>Prerequisites</h2>
 <p>The current software architecture has been tested entirely only on 
-  Ubuntu 10.04 LTS and 12.04 LTS.
+  Ubuntu 12.04 LTS, Ubuntu 14.04 LTS and is currently being ported on 16.04 LTS.
   
-  A large part of the basic algorithms have been tested on Windows and Mac, but there is no guarantee that it is still true.
+  A large part of the basic algorithms have been tested on Windows and Mac a while go, but there is no guarantee that it is still true.
 </p>
 
-<p>There is currently no up-to-date binary distribution.</p>
-
+<p>We advise the use of robotpkg to install the Stack of Tasks. You can try the install from the source code
+ but we rather advice its <a href="http://robotpkg.openrobots.org/debian.html">binary repository</a>.
 <p>
-  The installation is done through pulling and compiling a dozen of C++ 
-  repositories.
+  
   
   <h3>Dependencies</h3>
 
   The needed software are:
-  git, CMake, boost 1.40.0 / 1.46.0, lapack, blas, python 2.6 / 2.7
+  git, CMake, boost, lapack, blas, python 2.7
 
   <ul>
     <li>CMake</li>
@@ -36,26 +35,45 @@ group: navigation
     <li>Blas, lapack</li>
   </ul>
   
-  ROS (fuerte, groovy or hydro).
+  ROS (fuerte, groovy, hydro, indigo).
   Please note that most of the packages are ROS-independent, but some packages 
-  allow to link the SOT framework to ROS (e.g. redundant_manipulator_control)
+  allow to link the SOT framework to ROS (e.g. dynamic_graph_bridge, redundant_manipulator_control)
 </p>
 
 <h2>Binary installation</h2>
 
+<p>
 We are currently providing the stack of tasks through robotpkg on Ubuntu 12.04 LTS (i386/amd64),
 and Ubuntu 14.04 LTS (amd64).
-
-Please follow the instructions given <a href="http://robotpkg.openrobots.org/debian.html">here</a> to
-access the package repository.
-
-<h2>Source installation</h2>
-<h3>Ubuntu</h3>
+</p>
 
 <p>
-The sources can be installed using the script available at the following 
-repository: <a href="https://github.com/stack-of-tasks/install-sot">install-sot</a></code>.</br>
-This will install the default packages together with their dependencies.
+Please follow the instructions given <a href="http://robotpkg.openrobots.org/debian.html">here</a> to
+access the package repository.
+</p>
+
+<p>
+To install the package sot-core-v3 you can use
+<pre> <code class="bash">
+apt-get install robotpkg-sot-core-v3
+</code></pre>
+</p>
+<h2>Source installation</h2>
+
+<p>
+  The source installation can be realized through robotpkg.
+  Please follow the instructions given <a href="http://robotpkg.openrobots.org/install.html">here</a> to
+  access the package repository.
+  You will also have to install the wip (work in progress) part of robotpkg. The installation procedure is described
+  <a href="http://robotpkg.openrobots.org/robotpkg-wip.html">here</a>
+
+  To install the package sot-core-v3 then you can type:
+  <pre><code class="bash">
+cd robotpkg/wip/sot-core-v3
+make install
+    </code>
+  </pre>
+    
 </p>
 
 <!--
