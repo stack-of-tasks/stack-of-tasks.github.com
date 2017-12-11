@@ -84,13 +84,19 @@ ad2.sout.time
   </tr>
   <tr>
     <td colspan="2">
-      <pre><code class="python">robot.dynamic.help()
-No header documentation.
+      <pre><code class="python">ad1.help()
+Linear combination of inputs
+  - input  double
+  -        double
+  - output double
+  sout = coeff1 * sin1 + coeff2 * sin2
+  Coefficients are set by commands, default value is 1.
+
 List of commands:
 -----------------
-addJoint:       	    Add a child joint to a joint
-createJacobian: 	Create a jacobian (world frame) signal only for one joint.
-...</code></pre>
+setCoeff1:      	Set the coeff1.
+setCoeff2:      	Set the coeff2.
+</code></pre>
     </td>
   </tr>
 
@@ -100,15 +106,15 @@ createJacobian: 	Create a jacobian (world frame) signal only for one joint.
     <td>Displays the complete help for the command (number of argument...)</td>
   </tr>
   <tr>
-    <td colspan="2"><pre><code class="python">robot.dynamic.help('createOpPoint')
-createOpPoint:
-    
-    Create an operational point attached to a robot joint local frame.
-    
-      Input: 
-        - a string: name of the operational point,
-        - a string: name the joint, among (gaze, left-ankle, right ankle
-          , left-wrist, right-wrist, waist, chest).</code></pre>
+    <td colspan="2"><pre><code class="python">ad1.help('setCoeff1')
+setCoeff1:
+
+Set the coeff1.
+
+Input:
+ - a double.
+Void return.
+</code></pre>
     </td>
   </tr>
 
@@ -117,6 +123,14 @@ createOpPoint:
     <td><code class="python">entity.commands()</br></td>
     <td>Returns the list of commands of an entity, without description</td>
   </tr>
+  <tr>
+    <td colspan="2"><pre><code class="python">ad1.commands()
+('setCoeff1', 'setCoeff2')
+</code></pre>
+    </td>
+  </tr>
+
+
   <tr>
     <td><code class="python">entity.displaySignals()</br></td>
     <td>Lists the signals of an entity, indicates
@@ -130,17 +144,12 @@ createOpPoint:
   </tr>
   <tr>
     <td colspan="2">
-      <pre><code class="python">robot.dynamic.displaySignals()
---- &lt;hrp4_dynamic> signal list: 
-    |-- &lt;Sig:sotDynamic(hrp4_dynamic)::output(matrix)::JLF (Type Fun)
-    ...
-    |-- &lt;Sig:sotDynamic(hrp4_dynamic)::input(vector)::acceleration (Type Cst) AUTOPLUGGED
-    ...
-    |-- &lt;Sig:sotDynamic(hrp4_dynamic)::input(vector)::ffvelocity (Type Cst) UNPLUGGED
-    ...
-    |-- &lt;Sig:sotDynamic(hrp4_dynamic)::input(vector)::position (Type Cst) -->-- PLUGGED
-    ...
-    `-- &lt;Sig:sotDynamic(hrp4_dynamic)::output(vector)::zmp (Type Fun)</code></pre>
+      <pre><code class="python">ad1.displaySignals()
+--- &lt;ad1&gt; signal list:
+    |-- &lt;Sig:Add_of_double(ad1)::input(double)::sin1 (Type Cst) AUTOPLUGGED
+    |-- &lt;Sig:Add_of_double(ad1)::input(double)::sin2 (Type Cst) AUTOPLUGGED
+    `-- &lt;Sig:Add_of_double(ad1)::output(double)::sout (Type Fun)
+    </code></pre>
     </td>
   </tr>
 
@@ -153,8 +162,9 @@ createOpPoint:
     <td>Returns the current value of a signal </td>
   </tr>
   <tr>
-    <td colspan="2"><pre><code class="python">robot.dynamic.com.value
-(0.0216369554098584, 0.0004691300133536782, 0.7773273884899862)      </code></pre>
+    <td colspan="2"><pre><code class="python">ad1.sin1.value
+0.0
+</code></pre>
     </td>
   </tr>
 
@@ -164,8 +174,8 @@ createOpPoint:
   </tr>
   <tr>
     <td colspan="2">
-      <pre><code class="python">robot.dynamic.time
-0      </code></pre>
+      <pre><code class="python">ad1.sin1.time
+2      </code></pre>
     </td>
   </tr>
 
@@ -177,27 +187,11 @@ createOpPoint:
       greater than the current time).</td>
   </tr>
 
-  <tr>
-    <td><code class="python">entity.signal.deps(X)</code></br></td>
-    <td>Displays the signals on which entity.signal depends. 
-      The tree goes to the depth X (X>=0).</td>
-  </tr>
-    <td colspan="2"><pre><code class="python">robot.dynamic.com.deps(1)
--- Sig:sotDynamic(hrp4_dynamic)::output(vector)::com (Type Fun) (t=0 (/1) )
-   `-- Sig:sotDynamic(hrp4_dynamic)::intern(dummy)::newtoneuleur (Type Fun) (t=1 (/1) )
-      `-- ...</code></pre>
-      <pre><code class="python">robot.dynamic.position.deps(2)
--- sotDynamic(hrp4_dynamic)::input(vector)::position -->-- Sig:Device(hrp4)::output(vector)::state (Type Cst)</code></pre>
-    </td>
-
-
-
 </table>
 
-<h2>Examples</a></h2>
+<h2>Going further</a></h2>
 
 <p>
-  In the proposed examples, the entity graph is created in a terminal python interpreter and the simulation loop is run within this terminal.
   More details on the internal graph structure used in the stack of tasks framework are provided in
   the <a href="https://github.com/jrl-umi3218/dynamic-graph-tutorial">dynamic-graph-tutorial</a>.
 </p>
