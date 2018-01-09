@@ -26,8 +26,49 @@ But the main goal of this SDK is to consider a robot model $robot\_model$, its c
 and computes a control vector $\mathbf{u}$
 to make the robot performs actions.
 <br>
-The central concept of our control architecture is the notion of task.
+All our controllers are defined as optimization problems. We used either solvers of the shelves or we designed our own solvers depending of the targeted applications.
+The free variables are the control vector $\mathbf{u}$ to apply to the system.
+They are constraints which can be of several kinds: the mechanical constraints of the system with the environment, the behavior that we want the robot to follow.
+The next two following sections introduce our software framework to take into account those two constraints.
 
+
+<h2> Necessary Constraints </h2>
+
+<h3 id="Dynamics_system"> Dynamic modeling of a free-floating multi-body system</h3>
+The dynamic model of a free-floating multi-body system can be written this way:
+$$\mathbf{M}(\mathbf{q})\mathbf{\ddot{q}} + \mathbf{N}(\mathbf{q},\mathbf{\dot{q}})\mathbf{\dot{q}}+ \mathbf{G}(\mathbf{q}) = \mathbf{T}(\mathbf{q})\mathbf{u}$$
+with $\mathbf{q}$ the robot state variable, $\mathbf{M}(\mathbf{q})$ the inertia matrix of the multi-body system, $N(\mathbf{q},\mathbf{\dot{q}})$ the matrix
+of the non-linear dynamical effect (Centrifugal and Coriolis forces) of the system motion, $\mathbf{G}(\mathbf{q})$ the gravity, $\mathbf{u}$ a control vector,
+and $\mathbf{T}(\mathbf{q})$ the matrix mapping the control vector on the system.
+<br>
+The current software library we are using to computate such quantities and theirs derivatives
+ is <a href="http://stack-of-tasks.github.io/pinocchio/">Pinocchio</a><sup>
+  <a href="#fn1" id="ref1">1</a></sup>. Pinocchio include dynamical quantities such as angular momentum and its derivatives.
+
+<h3 id="Contact models">Contact models</h3>
+
+When considering a rigid contact model several constraints needs to be considered:
+<ul>
+  <li>No penetration in the ground</li>
+  <li>No sliding</li>
+</ul>
+Both constraints generate inequalities at the contact points with respect to the state vector:
+$$\mathbf{\phi}_n(\mathbf{q}) = 0$$
+$$\mathbf{\phi}_t(\mathbf{q}) = 0$$
+To avoid penetration velocity and acceleration of the points must be constrained too.  Using differentiation we obtain:
+$$ \mathbf{C}_n(\mathbf{q}) \mathbf{\dot{q}} = 0 $$
+$$ \mathbf{C}_n(\mathbf{q}) \mathbf{\ddot{q}} + \mathbf{s}_n(\mathbf{q},\mathbf{\dot{q}})= 0 $$
+The same derivation can be realized to avoid sliding:
+$$ \mathbf{C}_t(\mathbf{q}) \mathbf{\dot{q}} = 0 $$
+$$ \mathbf{C}_t(\mathbf{q}) \mathbf{\ddot{q}} + \mathbf{s}_n(\mathbf{q},\mathbf{\dot{q}})= 0 $$
+
+<h3 id="(Self-)collision"></h3>
+
+Self-collisiion is usually avoiding by formulating an inequality constaint on the distance between two robot bodies.
+To do that the closest two points between two shapes are tracked. The distance between two bodies is obtained through
+a flavor of the FCL library.
+
+<h2> Functions used to generate a robot behavior </h2>
 <h3> Formulating tasks </h3>
 
 <h4> Definition</h4>
@@ -40,9 +81,6 @@ and a configuration vector $\mathbf{q}$:
 $$ \mathbf{f}_{CoM}: (robot\_model, \mathbf{q}) \rightarrow \mathbf{c}$$
 
 We further assume that this function is at least differentiable once.
-The current software library we are using to computate such features, theirs derivatives
- is <a href="http://stack-of-tasks.github.io/pinocchio/">Pinocchio</a><sup>
-  <a href="#fn1" id="ref1">1</a></sup>. Pinocchio include dynamical quantities such as angular momentum and its derivatives.
 
 A task is then defined by the regulation between the feature depending on the current state $\mathbf{s}(\mathbf{q})$
 of the robot and a desired feature $\mathbf{s}^*$:
