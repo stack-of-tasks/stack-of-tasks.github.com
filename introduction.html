@@ -64,7 +64,7 @@ $$ \mathbf{C}_t(\mathbf{q}) \mathbf{\ddot{q}} + \mathbf{s}_n(\mathbf{q},\mathbf{
 
 <h3 id="(Self-)collision"></h3>
 
-Self-collisiion is usually avoiding by formulating an inequality constaint on the distance between two robot bodies.
+Self-collisiion is usually avoiding by formulating an inequality constraint on the distance between two robot bodies.
 To do that the closest two points between two shapes are tracked. The distance between two bodies is obtained through
 a flavor of the FCL library.
 
@@ -93,7 +93,26 @@ But we also have:
 $$\mathbf{\dot{e}} = \mathbf{\dot{s}}(\mathbf{q}) - \mathbf{\dot{s}}^*$$
 If the desired feature does not move we have $\mathbf{\dot{s}}^*=0$, in addition we can remark that
 $\mathbf{\dot{s}}(\mathbf{q})=\frac{\delta s}{\delta q}\mathbf{\dot{q}} = \mathbf{J}(\mathbf{q})\mathbf{\dot{q}}$
-
+Thus
+$$\mathbf{\dot{e}} = \mathbf{J}(\mathbf{q})\mathbf{\dot{q}} - \mathbf{\dot{s}}^*$$
+At a given time $t=k\Delta T$ a measurement of the feature $\hat{\mathbf{s}}(t)$ can give us:
+$$ \hat{\mathbf{e}}(t) = \hat{\mathbf{s}}(t) - \mathbf{s}^*(t)$$
+By posing $\hat{\mathbf{e}}(t)=\mathbf{e}(t)$ we have:
+$$ \mathbf{\dot{e}}(t) = - \lambda \mathbf{e}(t) = - \lambda \hat{\mathbf{e}}(t) = - \lambda (\hat{\mathbf{s}}(t) - \mathbf{s}^*(t))$$
+We will continue by dropping $(t)$ for sake of clarity:
+$$ - \lambda (\hat{\mathbf{s}} - \mathbf{s}^*) = \mathbf{J}(\mathbf{q})\mathbf{\dot{q}} \label{eq:equa_cst}$$
+Therefore if $\mathbf{J}(\mathbf{q})$ is invertible we can find $\mathbf{\dot{q}}$ using the following relationship:
+$$ \mathbf{\dot{q}} = - \lambda \mathbf{J}(\mathbf{q})^{-1}(\hat{\mathbf{s}} - \mathbf{s}^*) $$
+In general $\mathbf{J}(\mathbf{q})$ is not square and then we have to use the Moore-Penrose pseudo inverse:
+$$ \mathbf{\dot{q}} = - \lambda \mathbf{J}(\mathbf{q})^{+}(\hat{\mathbf{s}} - \mathbf{s}^*) $$
+But it can be also understood as the solution of the following optimization problem:
+$$ 
+\begin{array}
+& argmin_{\mathbf{\dot{q}}} \parallel \mathbf{\dot{q}} \parallel \\
+s.t. & - \lambda (\hat{\mathbf{s}} - \mathbf{s}^*) = \mathbf{J}(\mathbf{q})\mathbf{\dot{q}} \\ 
+\end{array}
+$$
+The library implementing the task formulation is <a href="http://github.com/stack-of-tasks/sot-core">sot-core</a>.
 
 <h3> Formulating instantaneous control as optimization problem</h3>
 
