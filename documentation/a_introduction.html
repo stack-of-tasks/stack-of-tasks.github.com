@@ -1,0 +1,121 @@
+---
+layout: page
+title: Introduction
+category: Documentation
+---
+
+<h2>Writing a controller</h2>
+The goal of the Stack-of-Tasks (SoT) is to provide a SDK in order to:
+<ul>
+  <li id="write_control_pb"> Write control problem for complex robots such as humanoid robots</li>
+  <li id="test_control_pb"> Test them quickly using geometric settings (rviz, gepetto-viewer), dynamic simulators (ODE,Bullet), system simulator (Gazebo)</li>
+  <li id="deploy_control_pb"> Deploy them in real robots (TALOS, HRP-2)</li>
+</ul>
+Depending on your target you might not be interested in using the full set of software we are providing.
+But the main goal of this SDK is to consider a robot model $robot\_model$, its current state $\mathbf{x}$
+and computes a control vector $\mathbf{u}$
+to make the robot performs actions.
+<br>
+All our controllers are defined as optimization problems. We used either solvers of the shelves or we designed our own solvers depending of the targeted applications.
+The free variables are the control vector $\mathbf{u}$ to apply to the system.
+They are constraints which can be of several kinds: the mechanical constraints of the system with the environment, the behavior that we want the robot to follow.
+The next two following sections introduce our software framework to take into account those two constraints.
+
+
+<h2> Necessary Constraints </h2>
+
+<h3 id="Dynamics_system"> Dynamic modeling of a free-floating multi-body system</h3>
+The dynamic model of a free-floating multi-body system can be written this way:
+$$\mathbf{M}(\mathbf{q})\mathbf{\ddot{q}} + \mathbf{N}(\mathbf{q},\mathbf{\dot{q}})\mathbf{\dot{q}}+ \mathbf{G}(\mathbf{q}) = \mathbf{T}(\mathbf{q})\mathbf{u}$$
+with $\mathbf{q}$ the robot state variable, $\mathbf{M}(\mathbf{q})$ the inertia matrix of the multi-body system, $N(\mathbf{q},\mathbf{\dot{q}})$ the matrix
+of the non-linear dynamical effect (Centrifugal and Coriolis forces) of the system motion, $\mathbf{G}(\mathbf{q})$ the gravity, $\mathbf{u}$ a control vector,
+and $\mathbf{T}(\mathbf{q})$ the matrix mapping the control vector on the system.
+<br>
+The current software library we are using to computate such quantities and theirs derivatives
+ is <a href="http://stack-of-tasks.github.io/pinocchio/">Pinocchio</a><sup>
+  <a href="#fn1" id="ref1">1</a></sup>. Pinocchio include dynamical quantities such as angular momentum and its derivatives.
+
+<h3 id="Contact models">Contact models</h3>
+
+When considering a rigid contact model several constraints needs to be considered:
+<ul>
+  <li>No penetration in the ground</li>
+  <li>No sliding</li>
+</ul>
+Both constraints generate inequalities at the contact points with respect to the state vector:
+$$\mathbf{\phi}_n(\mathbf{q}) = 0$$
+$$\mathbf{\phi}_t(\mathbf{q}) = 0$$
+To avoid penetration velocity and acceleration of the points must be constrained too.  Using differentiation we obtain:
+$$ \mathbf{C}_n(\mathbf{q}) \mathbf{\dot{q}} = 0 $$
+$$ \mathbf{C}_n(\mathbf{q}) \mathbf{\ddot{q}} + \mathbf{s}_n(\mathbf{q},\mathbf{\dot{q}})= 0 $$
+The same derivation can be realized to avoid sliding:
+$$ \mathbf{C}_t(\mathbf{q}) \mathbf{\dot{q}} = 0 $$
+$$ \mathbf{C}_t(\mathbf{q}) \mathbf{\ddot{q}} + \mathbf{s}_n(\mathbf{q},\mathbf{\dot{q}})= 0 $$
+
+<h3 id="(Self-)collision"></h3>
+
+Self-collisiion is usually avoiding by formulating an inequality constraint on the distance between two robot bodies.
+To do that the closest two points between two shapes are tracked. The distance between two bodies is obtained through
+a flavor of the FCL library.
+
+<h2> Functions used to generate a robot behavior </h2>
+<h3> Formulating tasks </h3>
+
+<h4> Definition</h4>
+Task ($\mathbf{e}$) are using features ($\mathbf{s}$). Features might be end-effector posision (hands, feet), the robot center-of-mass, or
+the center-of-gravity of an object projected in the image.
+We assume that a function relates the current state of the robot typically the configuration, speed, acceleration
+to a feature. For instance, we may want to consider the Center-Of-Mass of a robot specified by a model $robot\_model$
+and a configuration vector $\mathbf{q}$:
+
+$$ \mathbf{f}_{CoM}: (robot\_model, \mathbf{q}) \rightarrow \mathbf{c}$$
+
+We further assume that this function is at least differentiable once.
+
+A task is then defined by the regulation between the feature depending on the current state $\mathbf{s}(\mathbf{q})$
+of the robot and a desired feature $\mathbf{s}^*$:
+$$ \mathbf{e} = \mathbf{s}(\mathbf{q})- \mathbf{s}^* $$
+
+<h4> Imposing the task dynamic </h4>
+You can impose for instance that the task dynamic is an exponential decay:
+$$ \mathbf{\dot{e}} = - \lambda \mathbf{e}$$
+But we also have:
+$$\mathbf{\dot{e}} = \mathbf{\dot{s}}(\mathbf{q}) - \mathbf{\dot{s}}^*$$
+If the desired feature does not move we have $\mathbf{\dot{s}}^*=0$, in addition we can remark that
+$\mathbf{\dot{s}}(\mathbf{q})=\frac{\delta s}{\delta q}\mathbf{\dot{q}} = \mathbf{J}(\mathbf{q})\mathbf{\dot{q}}$
+Thus
+$$\mathbf{\dot{e}} = \mathbf{J}(\mathbf{q})\mathbf{\dot{q}} - \mathbf{\dot{s}}^*$$
+At a given time $t=k\Delta T$ a measurement of the feature $\hat{\mathbf{s}}(t)$ can give us:
+$$ \hat{\mathbf{e}}(t) = \hat{\mathbf{s}}(t) - \mathbf{s}^*(t)$$
+By posing $\hat{\mathbf{e}}(t)=\mathbf{e}(t)$ we have:
+$$ \mathbf{\dot{e}}(t) = - \lambda \mathbf{e}(t) = - \lambda \hat{\mathbf{e}}(t) = - \lambda (\hat{\mathbf{s}}(t) - \mathbf{s}^*(t))$$
+We will continue by dropping $(t)$ for sake of clarity:
+$$ - \lambda (\hat{\mathbf{s}} - \mathbf{s}^*) = \mathbf{J}(\mathbf{q})\mathbf{\dot{q}} \label{eq:equa_cst}$$
+Therefore if $\mathbf{J}(\mathbf{q})$ is invertible we can find $\mathbf{\dot{q}}$ using the following relationship:
+$$ \mathbf{\dot{q}} = - \lambda \mathbf{J}(\mathbf{q})^{-1}(\hat{\mathbf{s}} - \mathbf{s}^*) $$
+In general $\mathbf{J}(\mathbf{q})$ is not square and then we have to use the Moore-Penrose pseudo inverse:
+$$ \mathbf{\dot{q}} = - \lambda \mathbf{J}(\mathbf{q})^{+}(\hat{\mathbf{s}} - \mathbf{s}^*) $$
+But it can be also understood as the solution of the following optimization problem:
+$$
+\begin{array}
+& argmin_{\mathbf{\dot{q}}} \parallel \mathbf{\dot{q}} \parallel \\
+s.t. & - \lambda (\hat{\mathbf{s}} - \mathbf{s}^*) = \mathbf{J}(\mathbf{q})\mathbf{\dot{q}} \\
+\end{array}
+$$
+The library implementing the task formulation is <a href="http://github.com/stack-of-tasks/sot-core">sot-core</a>.
+
+<h3> Formulating instantaneous control as optimization problem</h3>
+
+The task function is allowing a very versatile formulation including
+<ul>
+  <li> Hierarchy of tasks </li>
+  <li> Weighted problems </li>
+</ul>
+
+<sup id="fn1">1. [Historically we have used <a href="https://github.com/jrl-umi3218/jrl-dynamics">jrl-dynamics</a> coupled with the toolbox
+<a href="http://www.inrialpes.fr/bipop/software/humans/">HuMAnS</a> for efficient computation. Unfortunately HuMAnS is using Mapple
+so we tried to use a template based approach called
+<a href="https://github.com/laas/metapod">Metapod</a> co-developed with Aldebaran Robotics now Softbank Robotics. Reading the book Rigid Body Dynamics from Featherstone
+shows that generated code might lead to a lot of code loaded in the memory. This happens to be less efficient than compact code with simple loops
+as implemented in Pinocchio.
+]<a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup>

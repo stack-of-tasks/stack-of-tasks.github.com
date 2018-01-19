@@ -1,0 +1,44 @@
+---
+layout: page
+title: Frequently Asked Questions (FAQ)
+category: Documentation
+---
+
+This page discusses several questions that are often asked by our users.
+
+## Error message when leaving the python interpretor / closing the controller
+
+### Symptoms
+```bash
+*** glibc detected *** python: double free or corruption (fasttop): 0x0000000002d61170 ***
+======= Backtrace: =========
+/lib/x86_64-linux-gnu/libc.so.6(+0x7eb96)[0x7f3677fb7b96]
+/usr/lib/x86_64-linux-gnu/libstdc++.so.6(_ZNSsD1Ev+0x1f)[0x7f366f19951f]
+/lib/x86_64-linux-gnu/libc.so.6(+0x3b901)[0x7f3677f74901]
+/lib/x86_64-linux-gnu/libc.so.6(+0x3b985)[0x7f3677f74985]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf4)[0x7f3677f5a774]
+python[0x41ba41]
+======= Memory map: ========
+00400000-00672000 r-xp 00000000 08:06 178766                             /usr/bin/python2.7
+00871000-00872000 r--p 00271000 08:06 178766                             /usr/bin/python2.7
+00872000-008db000 rw-p 00272000 08:06 178766                             /usr/bin/python2.7
+008db000-008ed000 rw-p 00000000 00:00 0
+023e2000-02d79000 rw-p 00000000 00:00 0                                  [heap]
+7f366464a000-7f366466a000 r-xp 00000000 08:07 3216189                    .../sot/src/sot/sot-dynamic/_build-DEBUG/src/zmp-from-forces.so.2.9.0-16-gf727
+7f366466a000-7f366486a000 ---p 00020000 08:07 3216189                    .../sot/src/sot/sot-dynamic/_build-DEBUG/src/zmp-from-forces.so.2.9.0-16-gf727
+7f366486a000-7f366486c000 r--p 00020000 08:07 3216189                    .../sot/src/sot/sot-dynamic/_build-DEBUG/src/zmp-from-forces.so.2.9.0-16-gf727
+7f366486c000-7f366486d000 rw-p 00022000 08:07 3216189                    .../sot/src/sot/sot-dynamic/_build-DEBUG/src/zmp-from-forces.so.2.9.0-16-gf727
+7f366486d000-7f366486e000 r-xp 00000000 08:07 2913923                    .../sot/install/lib/python2.7/site-packages/dynamic_graph/sot/dynamics/zmp_from_forces/wrap.so
+...
+```
+
+### Workaround
+
+The issue has been signaled in the github page of the package sot-dynamic
+but the solution for this problem has not be found yet.
+A workaround consists in loading an element of sot-dynamic prior to any load of
+an element of sot-core:
+```python
+from dynamic_graph.sot.dynamics import AngleEstimator
+from dynamic_graph.sot.core import *
+```

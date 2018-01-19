@@ -1,24 +1,6 @@
 ---
-layout: default
-title: 
-sitemap:
+layout: home
 ---
-
-<div class="container">
-  <div class="jumbotron">
-    <a href="http://projects.laas.fr/gepetto/index.php">
-    <img src="{{ site.baseurl }}/assets/logo-medium-black.png" alt="Gepetto team logo" align="left"
-    style="max-width: 15%; margin: 1em;"/></a>
-
-  <h1 style="display: inline-block;">Stack of Tasks</h1>
-
-  <p> Software for Controlling Redundant Robots </p>
-
-  <p>
-  <a class="btn btn-lg btn-primary" href="download.html?branch=master" role="button">Get started now &raquo;</a>
-  </p>
-</div>
-</div>
 
 <div class="container marketing">
 
@@ -92,9 +74,7 @@ sitemap:
 
 <div style="padding: 2em"></div>
 
-<div id="videos">
-{% include carrousel.html carrousel=site.data.projects %}
-</div>
+{% include carousel.html %}
 
 <div style="padding: 2em"></div>
 
@@ -126,7 +106,7 @@ sitemap:
       <h2 class="featurette-heading">Python interface for quick prototyping of problems</h2>
       <p class="lead">
 	Python scripting is embedded in SoT.
-	
+
 	A few lines of Python code allows users to
 	<a href="{{ site.baseurl }}/tutorials.html">solve inverse kinematics problems</a> or
 	<a href="https://github.com/stack-of-tasks/sot-torque-control">inverse dynamics problems</a>.
@@ -155,66 +135,6 @@ sitemap:
 <!-- place somewhere in the <body> of your page -->
 <section>
   <center>
-    <iframe src="http://www.slideshare.net/slideshow/embed_code/25873424"
-	    width="427" height="356" frameborder="0" marginwidth="0"
-	    marginheight="0" scrolling="no" style="border:1px solid
-						   #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen
-	    webkitallowfullscreen
-	    mozallowfullscreen> </iframe>
-    <div style="margin-bottom:5px">
-      <strong> <a href="https://www.slideshare.net/thomas.moulard/stack-of-tasks-course"
-		  title="Stack of Tasks Course" target="_blank">Stack of Tasks Course</a>
-      </strong>
-    </div>
+    <object width="100%" height="500" data="{{ 'sot.pdf' | relative_url }}"></object>
   </center>
 </section>
-
-<!-- Load FlexSlider Library -->
-<script src="js/flexslider/jquery.flexslider-min.js"></script>
-
-<!-- Load FlexSlider style -->
-<link href="js/flexslider/flexslider.css" rel="stylesheet">
-
-<!-- Load custom slider style -->
-<link rel="stylesheet" href="slider.css" type="text/css">
-<script src="http://a.vimeocdn.com/js/froogaloop2.min.js"></script>
-
-<!-- Load YouTube player -->
-<script src="js/flexslider-youtube.js"></script>
-<script src="js/jquery.fitvids.js"></script>
-
-<script type="text/javascript">
-  // Initialize FlexSlider
-  $(window).load(function() {
-  $('.flexslider')
-  .fitVids()
-  .flexslider({
-  animation: "slide",
-  //controlNav: "thumbnails",
-  directionNav: true,
-  // TODO: need to stop slideshow while playing videos to handle this
-  slideshow:false,
-  slideshowSpeed: 7500,
-  animationLoop: true,
-  animationSpeed: 600,
-  pauseOnAction: true,
-  pauseOnHover: true,
-  touch: true,
-  smoothHeight: true,
-  video: true,
-  before: function(slider){
-  if (slider.slides.eq(slider.currentSlide).find('iframe').length !== 0)
-  $f( slider.slides.eq(slider.currentSlide).find('iframe').attr('id') ).api('pause');
-  }
-  });
-  });
-</script>
-
-<div style="padding: 2em"></div>
-
-
-
-<div class="container marketing">
-
-  <!-- /END THE FEATURETTES -->
-</div>

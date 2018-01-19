@@ -1,0 +1,21 @@
+title: Stack of Tasks
+description: Software for Controlling Redundant Robots
+baseurl: ""
+url: "https://stack-of-tasks.github.io"
+markdown: kramdown
+remote_theme: Gepetto/jekyll-theme
+
+category_list:
+  - name: Getting Started
+    icon: graduation-cap
+  - name: Documentation
+    icon: book
+  - name: Tutorials
+    icon: play
+  - name: Development
+    icon: wrench
+    links:
+      - name: View on Github
+        url: http://www.github.com/stack-of-tasks/
+  - name: Support
+    icon: question-circle

@@ -1,6 +1,6 @@
 - name: demo_robotatcwe
   id: 2
-  image: demo_robotatcwe.pdf.png
+  image: demo_robotatcwe.png
   title: Robot@CWE
   lab: JRL-Japan
   description: This is the Final demonstrator of the FP7 IP Robot@CWE project.
@@ -10,7 +10,7 @@
 
 - name: demo_ballerose
   id: 3
-  image: demo_ballerose.pdf.png
+  image: demo_ballerose.png
   title: Grasping while walking
   lab: JRL-Japan
   description: Grasping a ball with visual guidance while walking. First demonstration with the presented framework during the end of Nicolas Mansard's PhD
@@ -19,7 +19,7 @@
 
 - name: demo_frigo
   id: 10
-  image: demo_frigo.pdf.png
+  image: demo_frigo.png
   title: Open the fridge
   lab: JRL-Japan
   description: The robot opens a fridge to grasp a can. The motion results from an optimized task sequence. The motion was implemented by F. Keith during his PhD thesis.
@@ -28,7 +28,7 @@
 
 - name: demo_switch
   id: 4
-  image: demo_switch.pdf.png
+  image: demo_switch.png
   title: Haptic communication
   lab: JRL-Japan
   description: Study about the haptic (non verbal) communication between two human partners during a task implying physical collaboration. The resulting strategies are applied to drive the humanoid robot decisions. The motion was programmed by A. Bussy during his PhD thesis.
@@ -39,7 +39,7 @@
 
 - name: demo_bci
   id: 6
-  image: demo_bci.pdf.png
+  image: demo_bci.png
   title: Brain computer interface
   lab: JRL-Japan
   description: The robot is driven by symbolic orders that are selected by a brain-computer interface. The orders are converted into tasks that are applied by the robot. The demonstration was developped by P. Gergondet during his PhD thesis. It is one of the main demonstrators of the FP7 IP VERE project.
@@ -50,7 +50,7 @@
 
 - name: demo_torea_robot
   id: 7
-  image: demo_torea_robot.pdf.png
+  image: demo_torea_robot.png
   title: Active vision
   lab: JRL-Japan
   description: The robot autonomously selects the most relevant poses to improve the 3D reconstruction of an ob ject. The built model is then used for the "Treasure hunting" project, led by O. Stasse [Saidi 07]. The active-search movements have been develop ed by T. Foissote during his PhD thesis.
@@ -58,7 +58,7 @@
 
 - name: demo_joystick
   id: 8
-  image: demo_joystick.pdf.png
+  image: demo_joystick.png
   title: Joystick-controlled walk
   lab:
     - JRL-Japan
@@ -71,7 +71,7 @@
 
 - name: demo_dune
   id: 9
-  image: demo_dune.pdf.png
+  image: demo_dune.png
   title: Visual servoing of the walk
   lab: JRL-Japan
   description: Similarly to the previous item, the robot COM and footprints are computed by model-predictive control. This time, the robot velocity is input by the camera feedback, following a visual-servoing scheme.
@@ -79,7 +79,7 @@
   url: http://hal.inria.fr/inria-00567664
 
 - name: demo_stpbv
-  image: demo_stpbv.pdf.png
+  image: demo_stpbv.png
   title: Obstacle avoidance
   lab: JRL-Japan
   description: The obstacles are locally taken into account in the control scheme. The task used to prevent the collision is based on a smooth body envelope [Escande 07].
@@ -88,10 +88,10 @@
 
 - name: demo_skin
   id: 10
-  image: demo_skin.pdf.png
+  image: demo_skin.png
   title: Skin for humanoid robots
   lab:
-    - JRL-Japan 
+    - JRL-Japan
     - TUM
   description: Several tactile and proximetric sensor cells are attached to the HRP-2 robot cover. They are used to guide the robot and teach by showing how to grasp various classes of ob ject using whole-body grasps.
   ref: mittendorfer-iros-13
@@ -101,10 +101,10 @@
 
 - name: demo_mexique
   id: 11
-  image: demo_mexique.pdf.png
+  image: demo_mexique.png
   title: Pursuit-evasion planning
   lab:
-    - JRL-Japan 
+    - JRL-Japan
     - CIMAT
   description: A navigation trajectory is computed while taking into account the robot visibility constraints. The plan is then executed using the walking pattern generator and the proposed whole-body resolution scheme.
   ref: hayet-ijhr-12
@@ -112,7 +112,7 @@
 
 - name: demo_clermont
   id: 12
-  image: demo_clermont.pdf.png
+  image: demo_clermont.png
   title: Bi-manual visual servoing
   lab:
     - LAAS
@@ -122,7 +122,7 @@
 
 - name: demo_fastplan
   id: 13
-  image: demo_fastplan.pdf.png
+  image: demo_fastplan.png
   title: Fast footstep replanning
   lab:
     - LAAS
@@ -135,7 +135,7 @@
 
 ## - name: demo_kidroom
 ##   id: 14
-##   image: demo_kidroom.pdf.png
+##   image: demo_kidroom.png
 ##   title: Careful steps through a kidroom
 ##   lab: LAAS
 ##   description: A footstep plan is computed into a very constrained environment. The flying-foot position is servoed. A programming language during the execution based on visual feedback. The demonstration was realized by T. Moulard during his PhD thesis.
@@ -146,15 +146,15 @@
 
 ## - name: demo_novela
 ##   id: 15
-##   image: demo_novela.pdf.png
+##   image: demo_novela.png
 ##   title: Yoga dance
 ##   lab: LAAS
-##   description: The robot motion is computed from motion-capture dynamic motion of a human dancer. Most of the work has been done by O. Ramos during his Master thesis. 
+##   description: The robot motion is computed from motion-capture dynamic motion of a human dancer. Most of the work has been done by O. Ramos during his Master thesis.
 ##   ref: ramos-ram-sub13
 
 ## - name: demo_chair
 ##   id: 16
-##   image: demo_chair.pdf.png
+##   image: demo_chair.png
 ##   title: Stting into an armchair
 ##   lab: LAAS
 ##   description: The motion illustrates multi-contact capabilities of the generation algorithm. It is executed in op en loop by the robot. This motion was developed by L. Saab during her PhD thesis.
@@ -163,28 +163,28 @@
 
 ## - name: demo_hak
 ##   id: 17
-##   image: demo_hak.pdf.png
+##   image: demo_hak.png
 ##   title: Motion recognition
 ##   lab:
 ##     - LAAS
 ##     - JRL-Japan
-##   description: The task-function approach is used to describe an observed motion. 
+##   description: The task-function approach is used to describe an observed motion.
 ##   ref: hak-tsmc-12
 ##   url: http://hal.archives-ouvertes.fr/hal-00697272
 
 ## - name: demo_duong
 ##   id: 18
-##   image: demo_duong.pdf.png
+##   image: demo_duong.png
 ##   title: Visual footstep planning and control
 ##   lab: LAAS
-##   description: 
+##   description:
 ##   ref: duong-humanoid-12
 ##   url: hal.inria.fr/hal-00727600
 
 
 ## - name: demo_smallstep_cdf
 ##   id: 19
-##   image: demo_smallstep_cdf.pdf.png
+##   image: demo_smallstep_cdf.png
 ##   title: Small-step controllability
 ##   lab: LAAS
 ##   description: The framework is used to execute a footstep plan computed by homotopy [Kanoun 11b]. The footstep trajectory is computed at the medium rate of 3Hz. The footsteps and robot posture is then sent to the control and performed in real time. Both algorithm loops are closed on the camera feedback. This motion was developed by D. Dang during his PhD thesis.
@@ -195,7 +195,7 @@
 
 ## - name: demo_slam
 ##   id: 20
-##   image: demo_slam.pdf.png
+##   image: demo_slam.png
 ##   title: SLAM based robot control
 ##   lab: LAAS
 ##   description: The robot localizes itself using a visual sparse map. The localization error is back fed to the control that corrects the position with respect to an input plan. The robot finally grasps a ball after several steps. The demonstration was developed by T. Moulard during his PhD thesis.
@@ -206,7 +206,7 @@
 
 ## - name: demo_dyninv
 ##   id: 21
-##   image: demo_dyninv.pdf.png
+##   image: demo_dyninv.png
 ##   title: Climbing a ladder
 ##   lab: LAAS
 ##   description: Application of the multi-contact inverse-dynamics motion generation to the humanoid robot Romeo model.
@@ -218,7 +218,7 @@
 
 ## - name: demo_stab
 ##   id: 22
-##   image: demo_stab.pdf.png
+##   image: demo_stab.png
 ##   title: Balance stabilization
 ##   description:  Developments toward outdoor walking, by F. Lamiraux.
 ##   lab:
@@ -227,7 +227,7 @@
 
 ## - name: demo_theremin
 ##   id: 23
-##   image: demo_theremin.pdf.png
+##   image: demo_theremin.png
 ##   title: Audio-based control
 ##   lab:
 ##     - LAAS
@@ -237,7 +237,7 @@
 
 ## - name: demoros
 ##   id: 24
-##   image: demoros.pdf.png
+##   image: demoros.png
 ##   title: ROS bridge
 ##   lab: LAAS
 ##   description: The framework is bridged to the middleware ROS. The middleware is used to import data coming from other processes or other computers (vision data, user commands, etc). The PR-2 model is included in the framework.
@@ -245,11 +245,11 @@
 
 ## - name: demo_romeo
 ##   id: 25
-##   image: demo_romeo.pdf.png
+##   image: demo_romeo.png
 ##   title: Navigation planning and execution
 ##   lab: INRIA
 ##   description: The robot Romeo navigates into a virtual home environment and finally performs a manipulation task. Final demonstrator of WP7 of the FUI Romeo project
 ##   ref: keith-wpromeo-11
 ##   video:
-##     youtube_id: eiQctKGUPw4    
+##     youtube_id: eiQctKGUPw4
 
