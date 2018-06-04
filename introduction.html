@@ -12,9 +12,8 @@ group: navigation
 	    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
     </script>
 
-<h1 id="sot_introduction" class="page-header">{{ page.title }}</h1>
-
-<h2>Writing a controller</h2>
+    <h1 id="sot_introduction" class="page-header">{{ page.title }}</h1>
+<h2>Introduction</h2>
 The goal of the Stack-of-Tasks (SoT) is to provide a SDK in order to:
 <ul>
   <li id="write_control_pb"> Write control problem for complex robots such as humanoid robots</li>
@@ -31,6 +30,14 @@ The free variables are the control vector $\mathbf{u}$ to apply to the system.
 They are constraints which can be of several kinds: the mechanical constraints of the system with the environment, the behavior that we want the robot to follow.
 The next two following sections introduce our software framework to take into account those two constraints.
 
+<h2> Quick start</h2>
+
+You are interested in:
+<ul>
+  <li> Prototyping a new controller </li>
+  <li> Have a real-time environment to control your robot</li>
+  <li> Deploy a real-time environment to control your robot using ROS (and perform simulation)</li>
+</ul>
 
 <h2> Necessary Constraints </h2>
 
@@ -95,6 +102,8 @@ If the desired feature does not move we have $\mathbf{\dot{s}}^*=0$, in addition
 $\mathbf{\dot{s}}(\mathbf{q})=\frac{\delta s}{\delta q}\mathbf{\dot{q}} = \mathbf{J}(\mathbf{q})\mathbf{\dot{q}}$
 Thus
 $$\mathbf{\dot{e}} = \mathbf{J}(\mathbf{q})\mathbf{\dot{q}} - \mathbf{\dot{s}}^*$$
+
+<h4> Generating a motion from sensor feedback </h4>
 At a given time $t=k\Delta T$ a measurement of the feature $\hat{\mathbf{s}}(t)$ can give us:
 $$ \hat{\mathbf{e}}(t) = \hat{\mathbf{s}}(t) - \mathbf{s}^*(t)$$
 By posing $\hat{\mathbf{e}}(t)=\mathbf{e}(t)$ we have:
@@ -112,9 +121,14 @@ $$
 s.t. & - \lambda (\hat{\mathbf{s}} - \mathbf{s}^*) = \mathbf{J}(\mathbf{q})\mathbf{\dot{q}} \\ 
 \end{array}
 $$
-The library implementing the task formulation is <a href="http://github.com/stack-of-tasks/sot-core">sot-core</a>.
+It is then possible to either generate a velocity control vector or to integrate it and send the position
+to a joint controller.
 
-<h3> Formulating instantaneous control as optimization problem</h3>
+The library implementing the task formulation in kinematics is <a href="http://github.com/stack-of-tasks/sot-core">sot-core</a>.
+It exists also a second order formulation: <a href="http://github.com/stack-of-tasks/sot-dyninv">sot-dyn-inv</a>.
+
+
+<h3> Formulating instantaneous control as an optimization problem</h3>
 
 The task function is allowing a very versatile formulation including
 <ul>
@@ -127,6 +141,6 @@ The task function is allowing a very versatile formulation including
 so we tried to use a template based approach called 
 <a href="https://github.com/laas/metapod">Metapod</a> co-developed with Aldebaran Robotics now Softbank Robotics. Reading the book Rigid Body Dynamics from Featherstone
 shows that generated code might lead to a lot of code loaded in the memory. This happens to be less efficient than compact code with simple loops
-as implemented in Pinocchio.
+as implemented in Pinocchio. This is due to the prediction system in current CPU micro-architecture.
 ]<a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup>
 <div style="padding: 10em"></div>

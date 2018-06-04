@@ -7,7 +7,7 @@ category: Getting Started
 ## How to install the stack of tasks on your machine?
 
 ## Prerequisites
-The current software architecture has been tested entirely only on Ubuntu 12.04 LTS, Ubuntu 14.04 LTS and is currently being ported on 16.04 LTS.
+The current software architecture has been tested entirely on Ubuntu 16.04 LTS, Ubuntu 14.04 LTS, and Ubuntu 12.04 LTS.
 
 A large part of the basic algorithms have been tested on Windows and Mac a while go, but there is no guarantee that it is still true.
 
@@ -30,7 +30,7 @@ Please note that most of the packages are ROS-independent, but some packages all
 
 ## Binary installation
 
-We are currently providing the stack of tasks through robotpkg on Ubuntu 12.04 LTS (i386/amd64), and Ubuntu 14.04 LTS (amd64).
+We are currently providing the stack of tasks through robotpkg on Ubuntu 16.04 LTS (amd64), and Ubuntu 14.04 LTS (amd64).
 
 Please follow the instructions given [here](http://robotpkg.openrobots.org/debian.html) to access the package repository.
 
