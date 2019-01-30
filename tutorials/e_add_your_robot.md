@@ -27,13 +27,13 @@ Also, it is mandatory for the base_link to be a virtual joint.
 
 ## Create the associated sot package
 
-To simplify this work, you can start from the [sot-romeo](https://github.com/stack-of-tasks/sot-romeo) package.
+To simplify this work, you can start from the [sot-talos](https://github.com/stack-of-tasks/sot-talos) package.
 This package contains two elements:
 
 - The python files allowing to load the dynamic model
 - The C++ files allowing to embed the controller
 
-From now on, we suppose that you have copied the sot-romeo repository into sot-astro (replace astro by the name of your
+From now on, we suppose that you have copied the sot-talos repository into sot-astro (replace astro by the name of your
 robot).
 
 ### Python
@@ -182,20 +182,6 @@ solver.push(robot.tasks['left-wrist'])
 go()
 ```
 
-#### Walk test
-
-The second test simply consists in validating the walk algorithms on your robot.
-You can replace the paragraph 3 of the previous example by this one:
-
-```python
-# 3. Basic walk
-from dynamic_graph.sot.pattern_generator.walking import CreateEverythingForPG, walkFewSteps
-
-CreateEverythingForPG(robot, solver)
-walkFewSteps(robot)
-
-go()
-```
 
 
 

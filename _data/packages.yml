@@ -30,7 +30,7 @@
   github: sot-pattern-generator
   status: stable
 
-- name: SoT Romeo
-  github: sot-romeo
+- name: SoT Talos
+  github: sot-talos
   status: stable
 
