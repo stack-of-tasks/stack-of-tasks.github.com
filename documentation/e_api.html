@@ -20,7 +20,7 @@ category: Documentation
           {% if package.status == 'beta' %}<sup>beta</sup>{% endif %}
         </td>
         <td id="{{ package.github }}-doc">
-          <a href="{{ package.github}}/doxygen/HEAD/">git</a>
+          <a href="http://projects.laas.fr/gepetto/doc/stack-of-tasks/{{ package.github}}/master/doxygen-html/">git</a>
           {% for version in package.releases %}
           , <a href="{{ package.github}}/doxygen/v{{ version }}">v{{ version }}</a>
           {% endfor %}
@@ -30,7 +30,7 @@ category: Documentation
       {% endfor %}
     </tbody>
   </table>
-</div>
+</div>http://projects.laas.fr/gepetto/doc/stack-of-tasks/dynamic-graph/master/doxygen-html/
 
 <div class="bs-callout bs-callout-info">
   <h4>Finding the documentation on your system</h4>
