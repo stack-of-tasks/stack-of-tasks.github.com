@@ -38,8 +38,8 @@ ad2.sin1.value = c
 ad2.sin2.value = d
 
 # plug all the signals
-plug(ad1.sout, mult.sin1)
-plug(ad2.sout, mult.sin2)
+plug(ad1.sout, mult.sin0)
+plug(ad2.sout, mult.sin1)
 ```
 
 In order to obtain the result of the multiplication, let's do:
@@ -94,7 +94,7 @@ A more complete list can be found in the cheat sheet (Documentation > Cheat shee
       - input  double
       -        double
       - output double
-      sout = coeff1 * sin1 + coeff2 * sin2
+      sout = coeff1 * sin0 + coeff2 * sin1
       Coefficients are set by commands, default value is 1.
 
     List of commands:
@@ -131,8 +131,8 @@ A more complete list can be found in the cheat sheet (Documentation > Cheat shee
     ```python
     ad1.displaySignals()
     --- <ad1> signal list:
+        |-- <Sig:Add_of_double(ad1)::input(double)::sin0> (Type Cst) AUTOPLUGGED
         |-- <Sig:Add_of_double(ad1)::input(double)::sin1> (Type Cst) AUTOPLUGGED
-        |-- <Sig:Add_of_double(ad1)::input(double)::sin2> (Type Cst) AUTOPLUGGED
         `-- <Sig:Add_of_double(ad1)::output(double)::sout> (Type Fun)
     ```
 
@@ -141,7 +141,7 @@ A more complete list can be found in the cheat sheet (Documentation > Cheat shee
 - `entity.signal.value`: Returns the current value of a signal
 
     ```python
-    ad1.sin1.value
+    ad1.sin0.value
     0.0
     ```
 
