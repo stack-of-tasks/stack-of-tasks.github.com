@@ -6,7 +6,7 @@ category: Tutorials
 
 ## First steps with dynamic graph
 
-We assume that the stack of tasks has been installed using the installation instruction provided [here](download).
+We assume that the stack of tasks has been installed using the installation instruction provided [here](../download).
 
 ### dynamic-graph 101
 

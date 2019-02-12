@@ -4,257 +4,290 @@ title: Getting Started
 category: Tutorials
 ---
 
-## Robot kinematic simulations
+## Introduction
 
 We assume that:
 
 1. the stack of tasks has been installed using the installation instruction provided [there](download);
-2. you understood the [dynamic graph mecanism](tuto_a_dynamic_graph).
+2. you understood the [dynamic graph mechanism](a_dynamic_graph).
 
-In this section are detailed some examples to test the stack of tasks framework on the humanoid robot Romeo.
+In this section are detailed some examples to test the stack of tasks framework on the humanoid robot TALOS.
 
-To vizualize the robot, you need `rviz`.
+To visualize the robot, you need to have ROS and the following packages for ROS Kinetic:
+```bash
+sudo apt-get install ros-kinetic-twist-mux ros-kinetic-joy-teleop ros-kinetic-moveit-ros-move-group ros-kinetic-humanoid-nav-msgs ros-kinetic-play-motion ros-kinetic-ompl ros-kinetic-moveit-planners-ompl ros-kinetic-moveit-simple-controller-manager
+```
 
-### Running the python scripts
+You also need the following robotpkg binaries:
+```bash
+sudo apt-get install robotpkg-sot-talos robotpkg-talos-dev robotpkg-talos-simulation
+```
 
-To execute the scripts and display the results with rviz, you need 2 consoles.
+### Setting up your environment
 
-In the first, start the viewer: `roslaunch romeo_description sot_display.launch`
+#### Quick start
+Copy the bash file [setup-opt-testrobotpkgargs.sh](shscripts/setup-opt-testrobotpkgarg.sh) in the following directory:
+```bash
+$HOME/bin
+```
+The following assume a clean environment where only
+```bash
+/opt/ros/kinetic/setup.bash 
+```
+has been called.
+You can then either source the file when you want to perform simulation, or temporary modifies your .bashrc file by adding:
+```bash
+source /home/user/bin/setup-opt-testrobotpkgarg.sh /opt/openrobots 1
+```
+#### Detailed explanations
 
-Note: if you do not want to use the viewer, you can only start `roscore`
-Of course, the ros environment must have been loaded to call rviz.
+The script **setup-opt-testrobotpkgarg.sh** simply set a number of important environment variables given one or two arguments.
+The first argument, used in both cases,
+is the directory where the robotpkg software is installed.
+If present the second argument imposes that these variables are the first ones to be considered in the current terminal.
 
-In the second, start the python script: `ipython -i kine_romeo.py`
+It is necessary for TALOS because some classical ROS packages must have a lower priority.
 
-To run them, it is necessary to complete the environment variables `LD_LIBRARY_PATH` and `PYTHONPATH`.
-To this purpose, you can either
+```bash
+if [ $# -eq 2 ];
+then
+  export ROBOTPKG_BASE=$1
+  export PATH=$ROBOTPKG_BASE/sbin:$ROBOTPKG_BASE/bin:$PATH
+  export LD_LIBRARY_PATH=$ROBOTPKG_BASE/lib:$ROBOTPKG_BASE/lib/plugin:$ROBOTPKG_BASE/lib64:$LD_LIBRARY_PATH
+  export PYTHONPATH=$ROBOTPKG_BASE/lib/python2.7/site-packages:$ROBOTPKG_BASE/lib/python2.7/dist-packages:$PYTHONPATH
+  export PKG_CONFIG_PATH=$ROBOTPKG_BASE/lib/pkgconfig/:$PKG_CONFIG_PATH
+  export ROS_PACKAGE_PATH=$ROBOTPKG_BASE/share:$ROBOTPKG_BASE/stacks:$ROS_PACKAGE_PATH
+  export CMAKE_PREFIX_PATH=$ROBOTPKG_BASE:$CMAKE_PREFIX_PATH
+else
+  export ROBOTPKG_BASE=$1
+  export PATH=$PATH:$ROBOTPKG_BASE/sbin:$ROBOTPKG_BASE/bin
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ROBOTPKG_BASE/lib:$ROBOTPKG_BASE/lib/plugin:$ROBOTPKG_BASE/lib64
+  export PYTHONPATH=$PYTHONPATH:$ROBOTPKG_BASE/lib/python2.7/site-packages:$ROBOTPKG_BASE/lib/python2.7/dist-packages
+  export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$ROBOTPKG_BASE/lib/pkgconfig/
+  export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$ROBOTPKG_BASE/share:$ROBOTPKG_BASE/stacks
+  export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:$ROBOTPKG_BASE
+fi
+```
 
-- Source the file `config_XXX.bash` created during the compilation using the `install-sot.sh` script. This file is
-  located in the same folder as `install_sot.sh`.
-- Complete manually the environment variables:
-  ```bash
-  export your_installation_path=${HOME}/devel/INSTALLATION_FOLDER/install
-  export ROS_PACKAGE_PATH=${your_installation_path}/../:$ROS_PACKAGE_PATH;
-  export LD_LIBRARY_PATH=${your_installation_path}/lib/:$LD_LIBRARY_PATH;
-  export LD_LIBRARY_PATH=${your_installation_path}/lib/plugin:$LD_LIBRARY_PATH;
-  export PYTHONPATH=${your_installation_path}/lib/python2.7/site-packages/:$PYTHONPATH
-  ```
+## Whole body motion
 
-Note:
-The tutorial scripts are usually located in `${your_installation_path}/lib/python2.7/site-packages/dynamic_graph/tutorial`.
-With the installation script, the installation path is `${HOME}/devel/INSTALLATION_FOLDER/install`,
-where `INSTALLATION_FOLDER` is the folder specified in command line when running the compilation script.
+### Introduction
 
+The following is a quick introduction to a control structure which is implementing a hierarchical inverse kinematics.
 
-## `kine_romeo.py`
+### Start the simulation
 
-The simplest example to try is `kine_romeo.py`.
-Here is the script split up:
+```bash
+roslaunch talos_gazebo talos_gazebo.launch
+```
+
+### Start the SoT-ROS interface for TALOS in simulation (Gazebo) 
+
+```bash
+roslaunch roscontrol_sot_talos sot_talos_controller_gazebo.launch
+```
+
+### Start the motion of the robot
+```bash
+cd /opt/openrobots/share/sot-talos/tests/
+python test.py
+```
+
+### Detailed explanation of test.py
+
+This script is run by a python interpreter outside the real-time control loop of the robot.
 
 ```python
-# 1. Create the robot and the solver
-# 1.a Create the robot
-from dynamic_graph.sot.romeo.robot import *
-from dynamic_graph.sot.core.robot_simu import RobotSimu
-robot = Robot('romeo', device=RobotSimu('romeo'))
+#!/usr/bin/python
+import sys
+import rospy
+```
+The first lines are simply import system modules and the ros python interface.
 
-# 1.b Create a solver.
-from dynamic_graph.sot.application.velocity.precomputed_tasks import initialize
-solver = initialize(robot)
+```python
+from std_srvs.srv import *
+```
+It is used to test if the services provided by the SoT-ROS interface  are available.
 
-# 1.c Binds with ros, export joint_state.
-from dynamic_graph.ros import *
-ros = Ros(robot)
+```python
+from dynamic_graph_bridge.srv import *
+from dynamic_graph_bridge_msgs.srv import *
+```
+Import the helper objects to access services provided by the SoT-ROS interface.
 
-# 2. Simulate a loop
-from dynamic_graph.sot.core.utils.thread_interruptible_loop import loopInThread,loopShortcuts
-dt=5e-3
-@loopInThread
-def inc():
-    robot.device.increment(dt)
+```python
+def launchScript(code,title,description = ""):
+    raw_input(title+':   '+description)
+    rospy.loginfo(title)
+    rospy.loginfo(code)
+    for line in code:
+        if line != '' and line[0] != '#':
+            print line
+            answer = runCommandClient(str(line))
+            rospy.logdebug(answer)
+            print answer
+    rospy.loginfo("...done with "+title)
+```
+This script is loading a python file which will be send to the embedded python interpreter of the SoT.
 
-runner=inc()
-[go,stop,next,n] = loopShortcuts(runner)
+```python
+# Waiting for services
+try:
+    rospy.loginfo("Waiting for run_command")
+    rospy.wait_for_service('/run_command')
+    rospy.loginfo("...ok")
 
-go()
+    rospy.loginfo("Waiting for start_dynamic_graph")
+    rospy.wait_for_service('/start_dynamic_graph')
+    rospy.loginfo("...ok")
+```
+This part of the script waits that the services provided by SoT-ROS interface become available:
+<ul>
+<li>**run_command which** is the service to send python commands.</li>
+<li>**start_dynamic_graph** is the service to start the control of the robot.</li>
+</ul>
 
-# 3.
-from dynamic_graph.sot.core import *
+
+```python
+    runCommandClient = rospy.ServiceProxy('run_command', RunCommand)
+    runCommandStartDynamicGraph = rospy.ServiceProxy('start_dynamic_graph', Empty)
+```
+Two helper objects are created to interact with the services.
+
+```python
+    initCode = open( "appli.py", "r").read().split("\n")
+```
+The file **apply.py** explained below is loaded in the variable initCode.
+It basically the control graph that will be applied to the robot.
+
+```python
+    rospy.loginfo("Stack of Tasks launched")
+
+    launchScript(initCode,'initialize SoT')
+```
+The last line is sending the script appli.py to the interpreter on the robot.
+
+```python
+    raw_input("Wait before starting the dynamic graph")
+    runCommandStartDynamicGraph()
+```
+The last line starts to apply the control law to the robot and evaluate the whole SoT control graph.
+
+```
+    raw_input("Wait before moving the hand")
+    runCommandClient("target = (0.5,-0.2,1.0)")
+    runCommandClient("gotoNd(taskRH,target,'111',(4.9,0.9,0.01,0.9))")
+    runCommandClient("sot.push(taskRH.task.name)")
+```
+The first **runCommandClient** specifies a target position in (X,Y,Z) coordinates.
+The second **runCommandClient** specifies the gains to apply to the task **taskRH** and the axis to control.
+Here '111' means that all axis are controlled.
+The last runCommandClient push the task **taskRH** in the solver.
+
+```
+except rospy.ServiceException, e:
+    rospy.logerr("Service call failed: %s" % e)
+```
+The last two lines deals with exception which might raise during the process.
+
+### Detailed explanations of appli.py
+
+```python
+from dynamic_graph.sot.core.meta_tasks_kine import MetaTaskKine6d, MetaTaskKineCom, gotoNd
+from dynamic_graph.sot.core.matrix_util import matrixToTuple
+from numpy import eye
+```
+The first line import object collecting objects to realize generic kinematic tasks.
+
+```python
+taskRH    = MetaTaskKine6d('rh',robot.dynamic,'rh',robot.OperationalPointsMap['right-wrist'])
+handMgrip = eye(4); handMgrip[0:3,3] = (0.1,0,0)
+taskRH.opmodif = matrixToTuple(handMgrip)
+taskRH.feature.frame('desired')
+```
+The first line create a task **rh** at the operational point 'right-wrist'.
+The second line creates a homogeneous matrix  **handMgrip** . The rotational part is set to identity and the translation part
+is set to **(0.1,0.0,0.0)**.
+The third line set a modification of the operational point. It is such that the controlled frame is 'right-wrist'
+multiplied at the left by **handMgrip**.
+
+```python
+# --- STATIC COM (if not walking)
+taskCom = MetaTaskKineCom(robot.dynamic)
+robot.dynamic.com.recompute(0)
+taskCom.featureDes.errorIN.value = robot.dynamic.com.value
+taskCom.task.controlGain.value = 10
+```
+This task controls the CoM of the robot by reading the output of the entity **robot.dynamic**.
+The second line initialize the output value of signal **robot.dynamic.com**.
+It becomes the desired value in the third line.
+The control gain is set to 10 in the fourth line.
+
+```python
+# --- CONTACTS
+#define contactLF and contactRF
+contactLF = MetaTaskKine6d('contactLF',robot.dynamic,'LF',robot.OperationalPointsMap['left-ankle'])
+contactLF.feature.frame('desired')
+contactLF.gain.setConstant(10)
+contactLF.keep()
+locals()['contactLF'] = contactLF
+```
+The first line create a set of object necessary to maintain contact with the left-ankle.
+The second line specifies the name of the desired feature.
+The third line specifies the gain of the contact.
+The fourth line maintains the position as a constraint.
+
+```
+contactRF = MetaTaskKine6d('contactRF',robot.dynamic,'RF',robot.OperationalPointsMap['right-ankle'])
+contactRF.feature.frame('desired')
+contactRF.gain.setConstant(10)
+contactRF.keep()
+locals()['contactRF'] = contactRF
+```
+The lines specified here are the same than for the previous contact.
+
+```python
 from dynamic_graph import plug
-
-robot.comTask.controlGain.value = 200
-robot.tasks['left-ankle'].controlGain.value = 200
-robot.tasks['right-ankle'].controlGain.value = 200
-
-solver.push(robot.tasks['left-wrist'])
-#robot.featureCom.selec.value = '011'
-# poserpy = PoseRollPitchYawToMatrixHomo('poserpy')
-# poserpy.sin.value = (0.08, 0.4, 0.0, 0,0,0)
-# plug(poserpy.sout, robot.features['left-wrist'].reference)
+from dynamic_graph.sot.core import SOT
 ```
-
-This code can be split in 3 parts.
-
-### Part 1: Create the robot and the solver
+The first line import bindings to the lower C++ framework.
+```
+sot = SOT('sot')
+sot.setSize(robot.dynamic.getDimension())
+plug(sot.control,robot.device.control)
+```
+The first line instantiates a solver to generate a kinematic solver.
+The second line defines the size of free variables. 
+The third line links the solution of the solver to the input of the robot.    
 
 ```python
-# 1. Create the robot and the solver
-# 1.a Create the robot
-from dynamic_graph.sot.romeo.robot import *
-from dynamic_graph.sot.core.robot_simu import RobotSimu
-robot = Robot('romeo', device=RobotSimu('romeo'))
+from dynamic_graph.ros import RosPublish
+ros_publish_state = RosPublish ("ros_publish_state")
+ros_publish_state.add ("vector", "state", "/sot_control/state")
 ```
+The first line import the python module to publish data in the ROS world (aka topics).
+The second line instantiate the object to make the interface from the Stack-Of-Tasks world
+to the ROS world. It creates an entity called "ros_publish_state".
 
-This creates the dynamic model of the robot, as well as the device entity.
-The dynamic entity allows the computation of the jacobian, inertia, com of the robot.
-The device entity simulates the behavior of the robot.
+The third line adds a topic called **/sot_control/state** from the signal **state**
+of the entity **ros_publish_state**
 
 
 ```python
-# 1.b Create a solver.
-from dynamic_graph.sot.application.velocity.precomputed_tasks import initialize
-solver = initialize (robot)
+plug (robot.device.state, ros_publish_state.state)
+robot.device.after.addDownsampledSignal ("ros_publish_state.trigger", 100)
 ```
+The first line connect the signal **robot.device.state** to the the signal **state** of the entity **ros_publish_state**.
+The second line calls the signal **ros_publish_state.trigger** at 100 Hz after evaluating the control law.
 
-This creates the default stack of tasks solver, that you can call using `solver`.
-You can add or remove tasks from it.
-To have a finer access to the tasks manipulation, you have to work directly
-with the entity `solver.sot`.
 
 ```python
-# 1.c Binds with ros, export joint_state.
-from dynamic_graph.ros import *
-ros = Ros(robot)
+sot.push(contactRF.task.name)
+sot.push(contactLF.task.name)
+sot.push(taskCom.task.name)
+robot.device.control.recompute(0)
 ```
-
-This creates a ROS binding allowing to display the model of the robot in rviz.
-It is not mandatory.
-
-#### Part 2: realizing a virtual loop
-
-```python
-# Part 2: realizing a virtual loop
-from dynamic_graph.sot.core.utils.thread_interruptible_loop import loopInThread,loopShortcuts
-dt=5e-3
-@loopInThread
-def inc():
-    robot.device.increment(dt)
-
-runner=inc()
-[go,stop,next,n] = loopShortcuts(runner)
-
-go()
-```
-
-When the controller is not embedded, it is necessary to trigger regularly the recomputation of the dynamic graph.
-This is realized here by the line `robot.device.increment(dt)` that increments its time value and realizes the
-kinematic integration of the control law.
-
-Four methods control this loop:
-
-- `go` starts the loop
-- `stop` stops the loop
-- `next`
-- `n`
-
-#### Part 3: specify the task
-
-At this point of the code, the simulation is already running, but the robot is still. It is controlled by 3 tasks:
-
-```python
-print solver
-+-----------------
-+   SOT
-+-----------------
-| romeo_task_com
-| romeo_task_left-ankle
-| romeo_task_right-ankle
-+-----------------
-```
-
-- `romeo_task_com`, A task controlling the center of mass
-- A 6d position task for the left ankle
-- A 6d position task for the right ankle
-
-Those three tasks are part of the set of tasks predefined (but not added to the stack) in the dictionary of tasks
-provided by the entity `_Robot_`.
-The dictionary can be consulted using the command: `robot.tasks`
-All of those tasks are 6d tasks.
-
-```python
-In [1]: robot.tasks
-Out[1]:
-{'balance': Task romeo_task_balance:
---- LIST ---
--> romeo_feature_com
--> romeo_feature_left-ankle
--> romeo_feature_right-ankle
-,
- 'left-wrist': Task romeo_task_left-wrist:
---- LIST ---
--> romeo_feature_left-wrist
-}
-```
-
-Let's now add a task for the left wrist and define its objective.
-As a 6d task, it is possible to define the objective by providing directly the homogeneous matrix.
-To simplify its definition, we are going to use an entity that converts 6d vectors (x,y, z, roll, pitch, yaw) into homogeneous matrices:
-```python
-poserpy = PoseRollPitchYawToMatrixHomo('poserpy')
-poserpy.sin.value = (0.08, 0.4, 0.0, 0, 0, 0)
-plug(poserpy.sout, robot.features['left-wrist'].reference)
-solver.push(robot.tasks['left-wrist'])
-```
-
-In the script, only the position of the hand is controlled. To change the degrees of freedom controlled, change the value of the signal selec.
-This signal is a sequence of boolean in **reverse polish notation**: psi, theta, phi, z, y, x. For example:
-
-```python
-robot.features['left-wrist'].reference.selec.value = '111111' # The task is controlled in position and orientation.
-taskRH.feature.selec.value = '000111' # The task is then controlled in position only
-```
-
-This task is characterized by 4 entities: the task, the operational point (here the right hand augmented by a translation), the desired position for the hand (here only 3d are defined) and the gain of the task (an adaptive gain).
-All those elements are gathered in a structure called _taskRH_,instance of _MetaTask6d_, that realizes all the links between the several entities.
-
-The definition of this task does not use the predefined version of the task contained in the dictionary, only to present an example of task creation.
-
-Typing `go` starts a the simulation loop.
-The robot will then go to the desired positions defined by the tasks.
-You can change interactively the content of the stack, the hand... using the python interface.
-
-To continue the example, you can for example try adding a task on the left hand, following the same scheme as for the right hand.
-
-## `walk_romeo.py`
-
-In this example, the Romeo robot goes for a (kinematic) walk.
-This script uses the jrl-walkgen package to compute the required postures for the feet, the center of mass and the waist orientation.
-
-The script is built in the same way than the kinematic example (Creation of the solver, definition of the *incrementation* loop),
-and definition of the pattern generator elements:
-
-```python
-from dynamic_graph.sot.pattern_generator.walking import CreateEverythingForPG , walkFewSteps, walkAndrei
-CreateEverythingForPG(robot, solver)
-# walkFewSteps(robot)
-walkAndrei(robot)
-robot.pg.velocitydes.value = (0.1, 0.0, 0.0)
-```
-
-The stack contains the following tasks (by order of decreasing priority)
-
-- `ROMEO_task_com`, that forces the Center of mass of the robot to be in the support polygon (only the x and y axes are
-  constrained). You can access it using `robot.tasks['com']`.
-- `taskWaist`, that constrains the rotation and translation of the waist in a plane. You can access it using
-  `robot.tasks['waist']`.
-- `ROMEO_task_right-ankle`, that defines the 6 dof position of the right Foot
-- `ROMEO_task_left-ankle`, that defines the 6 dof position of the left Foot
-
-In addition to those tasks (that translate the output of the pattern generator into tasks), another task is defined:
-`robot.tasks['robot_task_position']`, to force the arms, head and chest to stay still during the walk
-
-You can control the walk of the robot with the following command: `robot.pg.velocitydes.value = (x, y, theta)`
-
-- x is the forward/backward velocity
-- y is the lateral velocity
-- theta is the rotation velocity (requires that ||(x,y)|| > 0.000  1)
+The first line push the right foot contact task at the top of the SoT.
+The second line push the left foot contact task in the SoT.
+The third line push the CoM task in the SoT.
+The last line ask for a re-computation of the signal named **control** which belongs to the entity **device**.
