@@ -16,7 +16,7 @@ But the main goal of this SDK is to consider a robot model $robot\_model$, its c
 and computes a control vector $\mathbf{u}$
 to make the robot performs actions.
 <br>
-All our controllers are defined as optimization problems. We used either of the shelves solvers or our own solvers, depending of the targeted applications.
+All our controllers are defined as optimization problems. We are using either off-the-shelf solvers or our own solvers, depending of the targeted applications.
 The free variables are the control vector $\mathbf{u}$ to apply to the system.
 They are constraints which can be of several kinds: the mechanical constraints of the system with the environment, the behavior that we want the robot to follow.
 The next two following sections introduce our software framework to take into account those two constraints.
