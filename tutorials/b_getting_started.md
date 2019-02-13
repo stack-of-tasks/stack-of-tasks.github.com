@@ -26,7 +26,7 @@ sudo apt-get install robotpkg-sot-talos robotpkg-talos-dev robotpkg-talos-simula
 ### Setting up your environment
 
 #### Quick start
-Copy the bash file [setup-opt-testrobotpkgargs.sh](shscripts/setup-opt-testrobotpkgarg.sh) in the following directory:
+Copy the bash file [setup-opt-testrobotpkgargs.sh](../shscripts/setup-opt-testrobotpkgarg.sh) in the following directory:
 ```bash
 $HOME/bin
 ```
