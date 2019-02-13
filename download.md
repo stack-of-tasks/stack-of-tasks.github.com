@@ -13,6 +13,8 @@ A large part of the basic algorithms have been tested on Windows and Mac a while
 
 We advise the use of robotpkg to install the Stack of Tasks. You can try the install from the source code but we rather
 advice its [binary repository](http://robotpkg.openrobots.org/debian.html).
+You have to use also the [wip (work in progress) part of robotpkg](http://robotpkg.openrobots.org/robotpkg-wip.html).
+Please follow the section entitled "Binary packages in robotpkg/wip".
 
 ### Dependencies
 
