@@ -129,6 +129,7 @@ def launchScript(code,title,description = ""):
     rospy.loginfo("...done with "+title)
 ```
 This script is loading a python file which will be send to the embedded python interpreter of the SoT.
+It is waiting the user to hit the enter key after display the python file to be loaded.
 
 ```python
 # Waiting for services
@@ -143,8 +144,8 @@ try:
 ```
 This part of the script waits that the services provided by SoT-ROS interface become available:
 <ul>
-<li>**run_command which** is the service to send python commands.</li>
-<li>**start_dynamic_graph** is the service to start the control of the robot.</li>
+<li> <b>run_command which</b> is the service to send python commands.</li>
+<li> <b>start_dynamic_graph</b> is the service to start the control of the robot.</li>
 </ul>
 
 
@@ -169,12 +170,20 @@ The last line is sending the script appli.py to the interpreter on the robot.
 
 ```python
     raw_input("Wait before starting the dynamic graph")
+```
+This line prints the string and waits for the user to hit enter
+
+```python
     runCommandStartDynamicGraph()
 ```
 The last line starts to apply the control law to the robot and evaluate the whole SoT control graph.
 
-```
+```python
     raw_input("Wait before moving the hand")
+```
+This line prints the string and waits for the user to hit enter
+
+```python
     runCommandClient("target = (0.5,-0.2,1.0)")
     runCommandClient("gotoNd(taskRH,target,'111',(4.9,0.9,0.01,0.9))")
     runCommandClient("sot.push(taskRH.task.name)")
