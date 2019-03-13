@@ -81,6 +81,8 @@ The following is a quick introduction to a control structure which is implementi
 roslaunch talos_gazebo talos_gazebo.launch
 ```
 
+WARNING: The first time you are launching this command it might take some time because gazebo is downloading several models from Internet.
+
 ### Start the SoT-ROS interface for TALOS in simulation (Gazebo) 
 
 ```bash
