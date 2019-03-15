@@ -34,6 +34,22 @@ Please note that most of the packages are ROS-independent, but some packages all
 
 We are currently providing the stack of tasks through robotpkg on Ubuntu 16.04 LTS (amd64), and Ubuntu 14.04 LTS (amd64).
 
+### Setting a source.list file
+Robotpkg has two apt repository: a main repository and a work-in-progress repository:
+```bash
+sudo tee /etc/apt/sources.list.d/robotpkg.list <<EOF
+deb [arch=amd64] http://robotpkg.openrobots.org/wip/packages/debian/pub $codename robotpkg
+deb [arch=amd64] http://robotpkg.openrobots.org/packages/debian/pub $codename robotpkg
+EOF
+```
+
+### Register the robotpkg authentication key
+```bash
+curl http://robotpkg.openrobots.org/packages/debian/robotpkg.key |
+   sudo apt-key add -
+```
+
+### Update the list of available packages
 Please follow the instructions given [here](http://robotpkg.openrobots.org/debian.html) to access the package repository.
 
 To install the package sot-core-v3 you can use
