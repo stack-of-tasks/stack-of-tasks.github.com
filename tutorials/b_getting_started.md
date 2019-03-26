@@ -20,7 +20,7 @@ sudo apt-get install ros-kinetic-twist-mux ros-kinetic-joy-teleop ros-kinetic-mo
 
 You also need the following robotpkg binaries:
 ```bash
-sudo apt-get install robotpkg-sot-talos robotpkg-talos-dev robotpkg-talos-simulation
+sudo apt-get install robotpkg-talos-dev
 ```
 
 ### Setting up your environment
