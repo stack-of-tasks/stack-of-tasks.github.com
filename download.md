@@ -25,36 +25,35 @@ The needed software are:
 - Doxygen (and eventually LaTeX for mathematical formula rendering)
 - Boost
 - Eigen
-- Blas, lapack
-- ROS (fuerte, groovy, hydro, indigo).
+- ROS
 
-Please note that most of the packages are ROS-independent, but some packages allow to link the SOT framework to ROS (e.g. dynamic_graph_bridge, redundant_manipulator_control)
+Please note that most of the packages are ROS-independent, but some packages allow to link the SOT framework to ROS
+(e.g. `dynamic_graph_bridge`, `redundant_manipulator_control`)
 
 ## Binary installation
 
-We are currently providing the stack of tasks through robotpkg on Ubuntu 16.04 LTS (amd64), and Ubuntu 14.04 LTS (amd64).
+We are currently providing the stack of tasks through robotpkg on Ubuntu 18.04, 16.04 and 14.04
 
 ### Setting a source.list file
 Robotpkg has two apt repository: a main repository and a work-in-progress repository:
 ```bash
 sudo tee /etc/apt/sources.list.d/robotpkg.list <<EOF
-deb [arch=amd64] http://robotpkg.openrobots.org/wip/packages/debian/pub $codename robotpkg
-deb [arch=amd64] http://robotpkg.openrobots.org/packages/debian/pub $codename robotpkg
+deb [arch=amd64] http://robotpkg.openrobots.org/wip/packages/debian/pub $(lsb_release -cs) robotpkg
+deb [arch=amd64] http://robotpkg.openrobots.org/packages/debian/pub $(lsb_release -cs) robotpkg
 EOF
 ```
 
 ### Register the robotpkg authentication key
 ```bash
-curl http://robotpkg.openrobots.org/packages/debian/robotpkg.key |
-   sudo apt-key add -
+curl http://robotpkg.openrobots.org/packages/debian/robotpkg.key | sudo apt-key add -
 ```
 
 ### Update the list of available packages
-Please follow the instructions given [here](http://robotpkg.openrobots.org/debian.html) to access the package repository.
 
 To install the package sot-core-v3 you can use
 ```bash
-apt-get install robotpkg-sot-core-v3
+sudo apt update
+sudo apt install robotpkg-sot-core-v3
 ```
 
 ## Source installation
@@ -64,7 +63,7 @@ Please follow the instructions given [here](http://robotpkg.openrobots.org/insta
 
 You will also have to install the wip (work in progress) part of robotpkg. The installation procedure is described [here](http://robotpkg.openrobots.org/robotpkg-wip.html).
 
-To compile and install the package **sot-core-v3** then you can type:
+To compile and install the package `sot-core-v3` then you can type:
 
 ```bash
 cd robotpkg/wip/sot-core-v3
