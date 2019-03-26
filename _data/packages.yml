@@ -6,6 +6,10 @@
   github: dynamic-graph-python
   status: stable
 
+- name: Dynamic Graph Tutorial
+  github: dynamic-graph-tutorial
+  status: stable
+
 - name: SoT Core
   github: sot-core
   status: stable
