@@ -6,6 +6,7 @@ category: Documentation
 
 ## Online
 
+{:.table}
 | Package | Documentation |
 |---------|---------------|
 {% for package in site.data.packages %}|{{ package.name }}|[master](https://projects.laas.fr/gepetto/doc/stack-of-tasks/{{ package.doc }}/master/doxygen-html/)|
