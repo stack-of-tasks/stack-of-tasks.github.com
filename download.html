@@ -4,19 +4,19 @@ title: Download & Install
 category: Getting Started
 ---
 
-## How to install the stack of tasks on your machine?
+<h2> How to install the stack of tasks on your machine?</h2>
 
-## Prerequisites
+<h2> Prerequisites</h2>
 The current software architecture has been tested entirely on Ubuntu 16.04 LTS, Ubuntu 14.04 LTS, and Ubuntu 12.04 LTS.
 
 A large part of the basic algorithms have been tested on Windows and Mac a while go, but there is no guarantee that it is still true.
 
 We advise the use of robotpkg to install the Stack of Tasks. You can try the install from the source code but we rather
-advice its [binary repository](http://robotpkg.openrobots.org/debian.html).
-You have to use also the [wip (work in progress) part of robotpkg](http://robotpkg.openrobots.org/robotpkg-wip.html).
+advice its <a href="http://robotpkg.openrobots.org/debian.html">binary repository</a>.
+You have to use also the <a href="http://robotpkg.openrobots.org/robotpkg-wip.html">wip (work in progress) part of robotpkg</a>.
 Please follow the section entitled "Binary packages in robotpkg/wip".
 
-### Dependencies
+<h3> Dependencies</h3>
 
 The needed software are:
 - git, CMake, boost, lapack, blas, python 2.7
@@ -30,11 +30,11 @@ The needed software are:
 Please note that most of the packages are ROS-independent, but some packages allow to link the SOT framework to ROS
 (e.g. `dynamic_graph_bridge`, `redundant_manipulator_control`)
 
-## Binary installation
+<h2> Binary installation</h2>
 
 We are currently providing the stack of tasks through robotpkg on Ubuntu 18.04, 16.04 and 14.04
 
-### Setting a source.list file
+<h3> Setting a source.list file</h3>
 Robotpkg has two apt repository: a main repository and a work-in-progress repository:
 ```bash
 sudo tee /etc/apt/sources.list.d/robotpkg.list <<EOF
@@ -43,12 +43,14 @@ deb [arch=amd64] http://robotpkg.openrobots.org/packages/debian/pub $(lsb_releas
 EOF
 ```
 
-### Register the robotpkg authentication key
+<h3> Register the robotpkg authentication key</h3>
 ```bash
 curl http://robotpkg.openrobots.org/packages/debian/robotpkg.key | sudo apt-key add -
 ```
 
-### Update the list of available packages
+<h3> Update the list of available packages</h3>
+Please follow the instructions given [here](http://robotpkg.openrobots.org/debian.html) to access the package repository.
+>>>>>>> master:download.html
 
 To install the package sot-core-v3 you can use
 ```bash
@@ -56,7 +58,7 @@ sudo apt update
 sudo apt install robotpkg-sot-core-v3
 ```
 
-## Source installation
+<h2> Source installation</h2>
 
 The source installation can be realized through robotpkg.
 Please follow the instructions given [here](http://robotpkg.openrobots.org/install.html) to get the package repositories.
@@ -69,3 +71,25 @@ To compile and install the package `sot-core-v3` then you can type:
 cd robotpkg/wip/sot-core-v3
 make install
 ```
+
+
+<h2> Environment variables</h2>
+
+To setup the environment variables you can use the following script:
+```bash
+#!/bin/bash
+export ROBOTPKG_BASE=/opt/openrobots
+export PATH=$PATH:$ROBOTPKG_BASE/sbin:$ROBOTPKG_BASE/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ROBOTPKG_BASE/lib:$ROBOTPKG_BASE/lib/plugin:$ROBOTPKG_BASE/lib64
+export PYTHONPATH=$PYTHONPATH:$ROBOTPKG_BASE/lib/python2.7/site-packages:$ROBOTPKG_BASE/lib/python2.7/dist-packages
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$ROBOTPKG_BASE/lib/pkgconfig/
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$ROBOTPKG_BASE/share:$ROBOTPKG_BASE/stacks
+export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:$ROBOTPKG_BASE
+```
+
+If you name the script **setup-opt-robotpkg.sh** then the variables are setup by
+sourcing the file:
+```bash
+source setup-opt-robotpkg.sh
+```
+
