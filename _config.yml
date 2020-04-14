@@ -8,8 +8,14 @@ remote_theme: Gepetto/jekyll-theme
 category_list:
   - name: Getting Started
     icon: graduation-cap
+    links:
+      - name: Download & Install
+        url: https://stack-of-tasks.github.io/sot-doc/doxygen/HEAD/Installation_Generalities.html
   - name: Documentation
     icon: book
+    links:
+      - name: API Documentation
+        url: https://stack-of-tasks.github.io/sot-doc/doxygen/HEAD/status_robotpkg_binaries.html
   - name: Tutorials
     icon: play
   - name: Development
