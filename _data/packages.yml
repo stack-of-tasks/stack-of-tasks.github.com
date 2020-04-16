@@ -22,19 +22,26 @@
   github: sot-application
   status: stable
 
-- name: Soth
-  github: soth
+- name: TSID
+  github: tsid
   status: stable
 
-- name: SoT Dyninv
-  github: sot-dyninv
+- name: SoT Dynamic Pinocchio
+  github: sot-dynamic-pinocchio
   status: stable
 
 - name: SoT Pattern Generator
   github: sot-pattern-generator
   status: stable
 
+- name: Sot Torque control
+  github: sot-torque-control
+  status: stable
+
 - name: SoT Talos
   github: sot-talos
   status: stable
 
+- name: SoT Tiago
+  github: sot-tiago
+  status: stable

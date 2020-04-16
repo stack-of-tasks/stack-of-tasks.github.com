@@ -24,11 +24,15 @@ category: Development
           {% if package.status == 'alpha' %}<sup>alpha</sup>{% endif %}
           {% if package.status == 'beta' %}<sup>beta</sup>{% endif %}
         </td>
-        <td id="{{ package.github }}-travis-status">n/a</td>
+        <td id="{{ package.github }}-build-status">
+          <a href="https://gepgitlab.laas.fr/stack-of-tasks/{{ package.github }}/pipelines">
+            <img src="https://gepgitlab.laas.fr/stack-of-tasks/{{ package.github }}/badges/master/pipeline.svg"
+                 alt="Build Status" /></a>
+        </td>
         <td id="{{ package.github }}-coveralls-status">
           <a href="https://coveralls.io/r/stack-of-tasks/{{ package.github }}?branch=master">
             <img src="https://coveralls.io/repos/stack-of-tasks/{{ package.github }}/badge.png?branch=master"
-                 alt="Coverage Status" />
+                 alt="Coverage Status" /></a>
         </td>
         <td id="{{ package.github }}-issues">n/a</td>
         <td id="{{ package.github }}-pr">n/a</td>
