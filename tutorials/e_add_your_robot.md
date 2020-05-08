@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Add your robot
-category: Tutorials
+category: BackupTutorials
 ---
 
 This tutorial assumes that you have completed the basic tutorials with Romeo.

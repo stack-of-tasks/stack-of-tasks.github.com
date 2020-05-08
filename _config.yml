@@ -16,8 +16,17 @@ category_list:
     links:
       - name: API Documentation
         url: https://stack-of-tasks.github.io/sot-doc/doxygen/HEAD/status_robotpkg_binaries.html
+      - name: Introduction
+        url: https://stack-of-tasks.github.io/sot-doc/doxygen/HEAD/page_overview.html
   - name: Tutorials
     icon: play
+    links:
+      - name: Dynamic-graph 101
+        url: https://stack-of-tasks.github.io/sot-doc/doxygen/HEAD/tutorial_dyn_graph_101.html
+      - name: Whole body motion
+        url: https://stack-of-tasks.github.io/sot-doc/doxygen/HEAD/tutorial_whole_body_motion.html
+      - name: Bridge with ROS
+        url: https://stack-of-tasks.github.io/sot-doc/doxygen/HEAD/tutorial_ros_bridge.html
   - name: Development
     icon: wrench
     links:
