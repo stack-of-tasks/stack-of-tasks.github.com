@@ -25,13 +25,13 @@ category: Development
           {% if package.status == 'beta' %}<sup>beta</sup>{% endif %}
         </td>
         <td id="{{ package.github }}-build-status">
-          <a href="https://gepgitlab.laas.fr/stack-of-tasks/{{ package.github }}/pipelines">
-            <img src="https://gepgitlab.laas.fr/stack-of-tasks/{{ package.github }}/badges/master/pipeline.svg"
+          <a href="https://gitlab.laas.fr/stack-of-tasks/{{ package.github }}/pipelines">
+            <img src="https://gitlab.laas.fr/stack-of-tasks/{{ package.github }}/badges/master/pipeline.svg"
                  alt="Build Status" /></a>
         </td>
         <td id="{{ package.github }}-coveralls-status">
           <a href="https://gepettoweb.laas.fr/doc/stack-of-tasks/{{ package.github }}/master/coverage">
-            <img src="https://gepgitlab.laas.fr/stack-of-tasks/{{ package.github }}/badges/master/coverage.svg?job=doc-coverage"
+            <img src="https://gitlab.laas.fr/stack-of-tasks/{{ package.github }}/badges/master/coverage.svg?job=doc-coverage"
                  alt="Coverage Status" /></a>
         </td>
         <td id="{{ package.github }}-issues">n/a</td>
@@ -154,4 +154,3 @@ category: Development
     });
   </script>
 </div>
-
