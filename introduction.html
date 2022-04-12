@@ -115,10 +115,10 @@ $$ \mathbf{\dot{q}} = - \lambda \mathbf{J}(\mathbf{q})^{-1}(\hat{\mathbf{s}} - \
 In general $\mathbf{J}(\mathbf{q})$ is not square and then we have to use the Moore-Penrose pseudo inverse:
 $$ \mathbf{\dot{q}} = - \lambda \mathbf{J}(\mathbf{q})^{+}(\hat{\mathbf{s}} - \mathbf{s}^*) $$
 But it can be also understood as the solution of the following optimization problem:
-$$ 
+$$
 \begin{array}
 & argmin_{\mathbf{\dot{q}}} \parallel \mathbf{\dot{q}} \parallel \\
-s.t. & - \lambda (\hat{\mathbf{s}} - \mathbf{s}^*) = \mathbf{J}(\mathbf{q})\mathbf{\dot{q}} \\ 
+s.t. & - \lambda (\hat{\mathbf{s}} - \mathbf{s}^*) = \mathbf{J}(\mathbf{q})\mathbf{\dot{q}} \\
 \end{array}
 $$
 It is then possible to either generate a velocity control vector or to integrate it and send the position
@@ -136,9 +136,9 @@ The task function is allowing a very versatile formulation including
   <li> Weighted problems </li>
 </ul>
 
-<sup id="fn1">1. [Historically we have used <a href="https://github.com/jrl-umi3218/jrl-dynamics">jrl-dynamics</a> coupled with the toolbox 
+<sup id="fn1">1. [Historically we have used <a href="https://github.com/jrl-umi3218/jrl-dynamics">jrl-dynamics</a> coupled with the toolbox
 <a href="http://www.inrialpes.fr/bipop/software/humans/">HuMAnS</a> for efficient computation. Unfortunately HuMAnS is using Mapple
-so we tried to use a template based approach called 
+so we tried to use a template based approach called
 <a href="https://github.com/laas/metapod">Metapod</a> co-developed with Aldebaran Robotics now Softbank Robotics. Reading the book Rigid Body Dynamics from Featherstone
 shows that generated code might lead to a lot of code loaded in the memory. This happens to be less efficient than compact code with simple loops
 as implemented in Pinocchio. This is due to the prediction system in current CPU micro-architecture.

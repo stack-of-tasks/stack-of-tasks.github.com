@@ -181,9 +181,3 @@ solver.push(robot.tasks['left-wrist'])
 
 go()
 ```
-
-
-
-
-
-
